@@ -124,11 +124,11 @@ export default function Home() {
             </div>
 
             <a
-              href="mailto:jenilshingala1011@gmail.com"
+              href="mailto:jenilshingala2002@gmail.com"
               className="flex items-center gap-3 text-zinc-400 text-sm hover:text-zinc-200 transition-colors duration-200 group w-fit"
             >
               <Mail size={15} className="text-zinc-500 shrink-0 group-hover:text-zinc-300 transition-colors" />
-              jenilshingala1011@gmail.com
+              jenilshingala2002@gmail.com
             </a>
 
             <a
@@ -292,11 +292,11 @@ export default function Home() {
           </p>
           <div className="flex flex-col gap-4">
             <a
-              href="mailto:jenilshingala1011@gmail.com"
+              href="mailto:jenilshingala2002@gmail.com"
               className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-zinc-50 text-zinc-900 text-sm font-medium hover:bg-zinc-200 transition-colors duration-200 w-fit"
             >
               <Mail size={14} />
-              jenilshingala1011@gmail.com
+              jenilshingala2002@gmail.com
             </a>
             <a
               href="https://www.linkedin.com/in/jenilshingala-39685a219"

@@ -14,17 +14,17 @@ const fadeUp = {
   }),
 }
 
-function InteractiveName({ name }: { name: string }) {
+function InteractiveName({ name, color = "rgb(161,161,170)", hoverColor = "rgb(228,228,231)" }: { name: string; color?: string; hoverColor?: string }) {
   return (
     <span className="inline-flex">
       {name.split("").map((char, i) => (
         <motion.span
           key={i}
           className="inline-block cursor-default"
-          style={{ color: "rgb(161,161,170)" }}
+          style={{ color }}
           whileHover={{
             y: -8,
-            color: "rgb(228,228,231)",
+            color: hoverColor,
             transition: { type: "spring", stiffness: 400, damping: 10 },
           }}
         >
@@ -35,7 +35,6 @@ function InteractiveName({ name }: { name: string }) {
   )
 }
 
-
 export default function Home() {
   return (
     <>
@@ -43,19 +42,23 @@ export default function Home() {
       <section id="home" className="min-h-screen flex bg-[#0a0a0a] relative overflow-hidden pt-16">
         <Spotlight size={500} springOptions={{ bounce: 0, damping: 30 }} />
 
-        <div className="flex-1 flex flex-col justify-center px-12 md:px-20 lg:px-28 relative z-10 gap-6">
+        <div className="flex-1 flex flex-col justify-center items-center text-center px-12 md:px-20 lg:px-28 relative z-10 gap-6">
           <motion.div initial="hidden" animate="visible" variants={fadeUp} custom={0}>
             <p className="text-xs uppercase tracking-[0.2em] text-zinc-500 mb-4 font-mono">
               AI / GPU Engineer
             </p>
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-semibold tracking-tight text-zinc-50 leading-[1.05] select-none">
               <InteractiveName name="Jenil" /><br />
-              <InteractiveName name="Shingala" />
+              <InteractiveName
+                name="Shingala"
+                color="rgb(57,255,20)"
+                hoverColor="rgb(180,255,150)"
+              />
             </h1>
           </motion.div>
 
           <motion.div initial="hidden" animate="visible" variants={fadeUp} custom={1} className="flex flex-col gap-3">
-            <p className="text-sm text-zinc-500 max-w-xs leading-relaxed">
+            <p className="text-sm text-zinc-500 max-w-xs leading-relaxed mx-auto">
               Generative AI · Agentic AI · LLMOps · MLOps<br />
               CUDA Kernel Programming · GPU Computing · Azure AI
             </p>
@@ -71,11 +74,11 @@ export default function Home() {
             </div>
 
             <a
-              href="mailto:jenilshingala1011@gmail.com"
+              href="mailto:jenilshingala2002@gmail.com"
               className="flex items-center gap-3 text-zinc-400 text-sm hover:text-zinc-200 transition-colors duration-200 group w-fit"
             >
               <Mail size={15} className="text-zinc-500 shrink-0 group-hover:text-zinc-300 transition-colors" />
-              jenilshingala1011@gmail.com
+              jenilshingala2002@gmail.com
             </a>
 
             <a
