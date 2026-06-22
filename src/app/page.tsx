@@ -159,18 +159,23 @@ export default function Home() {
         className="relative h-screen flex items-center overflow-hidden"
         style={{ zIndex: 10 }}>
 
-        {/* Video — must be inside the section so the hero stacking context renders it */}
+        {/* Video — clipped to left half via mask so it never washes out the robot */}
         <video
           autoPlay loop muted playsInline
           className="absolute inset-0 w-full h-full object-cover pointer-events-none"
-          style={{ zIndex: 0, opacity: 0.6 }}
+          style={{
+            zIndex: 0,
+            opacity: 0.7,
+            maskImage: "linear-gradient(to right, black 0%, black 45%, transparent 70%)",
+            WebkitMaskImage: "linear-gradient(to right, black 0%, black 45%, transparent 70%)",
+          }}
         >
           <source src="/bg.mp4" type="video/mp4" />
         </video>
 
-        {/* Gradient — readable on left, fades out right so robot shows through */}
+        {/* Gradient — text-side readability */}
         <div className="absolute inset-0 pointer-events-none"
-          style={{ zIndex: 1, background: "linear-gradient(100deg, rgba(8,8,8,0.88) 0%, rgba(8,8,8,0.72) 40%, rgba(8,8,8,0.28) 62%, rgba(8,8,8,0.04) 80%, transparent 90%)" }} />
+          style={{ zIndex: 1, background: "linear-gradient(100deg, rgba(8,8,8,0.82) 0%, rgba(8,8,8,0.6) 38%, rgba(8,8,8,0.15) 60%, transparent 75%)" }} />
 
         <Spotlight size={520} springOptions={{ bounce: 0, damping: 28 }} />
 
@@ -180,9 +185,9 @@ export default function Home() {
         >
           {/* Role label */}
           <motion.div
-            initial={{ opacity: 0, x: -18 }}
+            initial={{ opacity: 0, x: -14 }}
             animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.55, ease: EXPO }}
+            transition={{ duration: 0.38, ease: EXPO }}
           >
             <span className="font-mono text-xs tracking-[0.35em] uppercase"
               style={{ color: "rgb(57,255,20)" }}>
@@ -190,11 +195,11 @@ export default function Home() {
             </span>
           </motion.div>
 
-          {/* Name — the hero */}
+          {/* Name */}
           <motion.h1
-            initial={{ opacity: 0, y: 48, filter: "blur(20px)" }}
+            initial={{ opacity: 0, y: 32, filter: "blur(14px)" }}
             animate={{ opacity: 1, y: 0,  filter: "blur(0px)" }}
-            transition={{ duration: 0.88, ease: EXPO, delay: 0.07 }}
+            transition={{ duration: 0.55, ease: EXPO, delay: 0.04 }}
             className="font-bold leading-[0.9] tracking-[-0.03em]"
             style={{ fontSize: "clamp(3.8rem, 10vw, 9rem)" }}
           >
@@ -207,9 +212,9 @@ export default function Home() {
 
           {/* Tagline */}
           <motion.p
-            initial={{ opacity: 0, y: 18 }}
+            initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, ease: EXPO, delay: 0.22 }}
+            transition={{ duration: 0.38, ease: EXPO, delay: 0.12 }}
             className="text-zinc-500 leading-relaxed max-w-[28ch]"
             style={{ fontSize: "clamp(1rem, 1.5vw, 1.15rem)" }}
           >
@@ -218,9 +223,9 @@ export default function Home() {
 
           {/* CTAs */}
           <motion.div
-            initial={{ opacity: 0, y: 14 }}
+            initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.55, ease: EXPO, delay: 0.32 }}
+            transition={{ duration: 0.35, ease: EXPO, delay: 0.2 }}
             className="flex flex-wrap gap-3"
           >
             <motion.a
@@ -250,7 +255,7 @@ export default function Home() {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 0.5, duration: 0.45 }}
+            transition={{ delay: 0.28, duration: 0.32 }}
             className="flex flex-wrap gap-2"
           >
             {certs.map(c => (
@@ -279,7 +284,7 @@ export default function Home() {
           <motion.div
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            transition={{ delay: 0.68, duration: 0.45 }}
+            transition={{ delay: 0.36, duration: 0.32 }}
             className="flex items-end justify-between"
           >
             <div className="flex items-center gap-2 font-mono text-[11px] tracking-widest uppercase"

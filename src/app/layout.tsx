@@ -47,6 +47,9 @@ export default function RootLayout({
       lang="en"
       className={`${spaceGrotesk.variable} ${spaceMono.variable} h-full antialiased`}
     >
+      <head>
+        <link rel="preconnect" href="https://prod.spline.design" crossOrigin="anonymous" />
+      </head>
       <body className="min-h-full flex flex-col bg-[#080808] text-zinc-50">
         <a href="#main-content" className="skip-link">
           Skip to main content
