@@ -11,7 +11,7 @@ const excletusSans = Expletus_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "Jenil Shingala — Portfolio",
+  title: "Jenil Shingala Portfolio",
   description: "CS graduate & software engineer",
 };
 
