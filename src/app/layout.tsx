@@ -13,9 +13,6 @@ const excletusSans = Expletus_Sans({
 export const metadata: Metadata = {
   title: "Jenil Shingala Portfolio",
   description: "CS graduate & software engineer",
-  icons: {
-    icon: '/favicon.png',
-  },
 };
 
 export default function RootLayout({
