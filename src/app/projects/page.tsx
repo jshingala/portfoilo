@@ -152,7 +152,7 @@ const projects = [
 
 export default function Projects() {
   return (
-    <main className="min-h-screen bg-[#0a0a0a] px-5 sm:px-10 md:px-20 lg:px-28 pt-28 pb-24">
+    <div className="min-h-screen bg-[#0a0a0a] px-5 sm:px-10 md:px-20 lg:px-28 pt-28 pb-24">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -228,7 +228,7 @@ export default function Projects() {
           })}
         </div>
       </div>
-    </main>
+    </div>
   )
 }
 

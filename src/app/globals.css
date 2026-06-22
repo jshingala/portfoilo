@@ -1,6 +1,5 @@
 @import "tailwindcss";
 
-
 :root {
   --background: #0a0a0a;
   --foreground: #fafafa;
@@ -30,6 +29,32 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: var(--font-expletus-sans), sans-serif;
+}
+
+/* ── Skip-to-content link (keyboard / screen-reader accessibility) ── */
+.skip-link {
+  position: fixed;
+  top: -100px;
+  left: 1rem;
+  z-index: 9999;
+  background: rgb(57,255,20);
+  color: #0a0a0a;
+  padding: 0.5rem 1.25rem;
+  font-weight: 700;
+  font-size: 0.875rem;
+  border-radius: 0 0 8px 8px;
+  text-decoration: none;
+  transition: top 0.2s;
+}
+.skip-link:focus {
+  top: 0;
+}
+
+/* ── Focus rings for keyboard navigation (WCAG AA) ── */
+:focus-visible {
+  outline: 2px solid rgb(57,255,20);
+  outline-offset: 3px;
+  border-radius: 4px;
 }
 
 @keyframes spotlight {
@@ -92,4 +117,17 @@ body {
 .interactive-char:hover {
   transform: translateY(-8px);
   color: var(--char-hover-color);
+}
+
+/* ── prefers-reduced-motion (WCAG 2.3 / skill rule) ── */
+@media (prefers-reduced-motion: reduce) {
+  .animate-neon-cycle,
+  .animate-scroll-bounce,
+  .animate-spotlight,
+  .loader {
+    animation: none !important;
+  }
+  .interactive-char {
+    transition: none !important;
+  }
 }
