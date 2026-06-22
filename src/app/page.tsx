@@ -144,6 +144,23 @@ export default function Home() {
   return (
     <div style={{ background: "#080808" }}>
 
+      {/* Video background — darkened + desaturated to match site palette */}
+      <div className="fixed inset-0 pointer-events-none" style={{ zIndex: 0 }}>
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="w-full h-full object-cover"
+          style={{ opacity: 0.55 }}
+        >
+          <source src="/bg.mp4" type="video/mp4" />
+        </video>
+        {/* Vignette overlay — keeps edges dark */}
+        <div className="absolute inset-0"
+          style={{ background: "radial-gradient(ellipse at center, transparent 30%, rgba(8,8,8,0.75) 100%)" }} />
+      </div>
+
       {/* Fixed robot — shifted right so it fills the right half */}
       <div className="fixed inset-0 pointer-events-none" style={{ zIndex: 1 }}>
         <div className="hidden md:block absolute inset-0" style={{ transform: "translateX(16%)" }}>
