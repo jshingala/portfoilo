@@ -180,41 +180,50 @@ export default function Projects() {
                 initial={{ opacity: 0, x: isLeft ? -40 : 40 }}
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: i * 0.07, duration: 0.45 }}
-                className="relative flex items-start mb-10"
+                className="relative mb-6"
               >
-                {/* Left side */}
-                <div className="w-1/2 pr-12 flex justify-end">
-                  {isLeft && (
-                    <div className="w-full max-w-md rounded-xl p-5 border transition-all duration-300"
-                      style={{
-                        background: "rgba(0,20,0,0.6)",
-                        borderColor: "rgba(57,255,20,0.25)",
-                        boxShadow: "0 0 20px rgba(57,255,20,0.05)"
-                      }}>
-                      <CardContent project={project} align="right" />
-                    </div>
-                  )}
-                </div>
+                {/* Card row */}
+                <div className="flex items-start">
+                  {/* Left side */}
+                  <div className="w-1/2 pr-12 flex justify-end">
+                    {isLeft && (
+                      <div className="w-full max-w-md flex flex-col gap-2">
+                        <div className="rounded-xl p-5 border transition-all duration-300"
+                          style={{
+                            background: "rgba(0,20,0,0.6)",
+                            borderColor: "rgba(57,255,20,0.25)",
+                            boxShadow: "0 0 20px rgba(57,255,20,0.05)"
+                          }}>
+                          <CardContent project={project} align="right" />
+                        </div>
+                        <GitHubBar project={project} />
+                      </div>
+                    )}
+                  </div>
 
-                {/* Center dot */}
-                <div className="absolute left-1/2 top-5 -translate-x-1/2 z-10 w-4 h-4 rounded-full shrink-0"
-                  style={{
-                    background: "rgb(57,255,20)",
-                    boxShadow: "0 0 10px rgb(57,255,20), 0 0 20px rgba(57,255,20,0.5)"
-                  }} />
+                  {/* Center dot */}
+                  <div className="absolute left-1/2 top-5 -translate-x-1/2 z-10 w-4 h-4 rounded-full shrink-0"
+                    style={{
+                      background: "rgb(57,255,20)",
+                      boxShadow: "0 0 10px rgb(57,255,20), 0 0 20px rgba(57,255,20,0.5)"
+                    }} />
 
-                {/* Right side */}
-                <div className="w-1/2 pl-12 flex justify-start">
-                  {!isLeft && (
-                    <div className="w-full max-w-md rounded-xl p-5 border transition-all duration-300"
-                      style={{
-                        background: "rgba(0,20,0,0.6)",
-                        borderColor: "rgba(57,255,20,0.25)",
-                        boxShadow: "0 0 20px rgba(57,255,20,0.05)"
-                      }}>
-                      <CardContent project={project} align="left" />
-                    </div>
-                  )}
+                  {/* Right side */}
+                  <div className="w-1/2 pl-12 flex justify-start">
+                    {!isLeft && (
+                      <div className="w-full max-w-md flex flex-col gap-2">
+                        <div className="rounded-xl p-5 border transition-all duration-300"
+                          style={{
+                            background: "rgba(0,20,0,0.6)",
+                            borderColor: "rgba(57,255,20,0.25)",
+                            boxShadow: "0 0 20px rgba(57,255,20,0.05)"
+                          }}>
+                          <CardContent project={project} align="left" />
+                        </div>
+                        <GitHubBar project={project} />
+                      </div>
+                    )}
+                  </div>
                 </div>
               </motion.div>
             )
@@ -256,24 +265,54 @@ function CardContent({ project, align }: { project: typeof projects[0]; align: "
         ))}
       </div>
 
-      <div className={`flex gap-4 ${align === "right" ? "justify-end" : ""}`}>
-        {project.github && (
-          <a href={project.github} target="_blank" rel="noopener noreferrer"
-            className="flex items-center gap-1.5 text-sm tracking-wider uppercase transition-colors duration-200"
-            style={{ color: "rgba(57,255,20,0.7)" }}
-            onMouseOver={e => (e.currentTarget.style.color = "rgb(57,255,20)")}
-            onMouseOut={e => (e.currentTarget.style.color = "rgba(57,255,20,0.7)")}>
-            <Globe size={13} /> GitHub
-          </a>
-        )}
-        {project.live && (
-          <a href={project.live} target="_blank" rel="noopener noreferrer"
-            className="flex items-center gap-1.5 text-sm tracking-wider uppercase transition-colors duration-200"
-            style={{ color: "rgba(57,255,20,0.7)" }}>
-            <ExternalLink size={13} /> Live
-          </a>
-        )}
-      </div>
     </>
+  )
+}
+
+function GitHubBar({ project }: { project: typeof projects[0] }) {
+  if (!project.github && !project.live) return null
+  return (
+    <div className="flex gap-2">
+      {project.github && (
+        <a href={project.github} target="_blank" rel="noopener noreferrer"
+          className="flex-1 flex items-center justify-between px-5 py-2.5 rounded-lg transition-all duration-300"
+          style={{
+            border: "1px solid rgba(57,255,20,0.25)",
+            background: "rgba(57,255,20,0.03)",
+          }}
+          onMouseOver={e => {
+            e.currentTarget.style.background = "rgba(57,255,20,0.09)"
+            e.currentTarget.style.borderColor = "rgba(57,255,20,0.65)"
+            e.currentTarget.style.boxShadow = "0 0 20px rgba(57,255,20,0.12), inset 0 0 20px rgba(57,255,20,0.04)"
+          }}
+          onMouseOut={e => {
+            e.currentTarget.style.background = "rgba(57,255,20,0.03)"
+            e.currentTarget.style.borderColor = "rgba(57,255,20,0.25)"
+            e.currentTarget.style.boxShadow = "none"
+          }}>
+          <div className="flex items-center gap-2.5">
+            <Globe size={14} style={{ color: "rgb(57,255,20)" }} />
+            <span className="text-xs font-bold tracking-widest uppercase" style={{ color: "rgb(57,255,20)" }}>
+              View on GitHub
+            </span>
+          </div>
+          <div className="flex items-center gap-1.5">
+            <span className="text-[11px] font-mono hidden sm:block" style={{ color: "rgba(57,255,20,0.4)" }}>
+              {project.github.replace("https://github.com/", "")}
+            </span>
+            <ExternalLink size={12} style={{ color: "rgba(57,255,20,0.55)" }} />
+          </div>
+        </a>
+      )}
+      {project.live && (
+        <a href={project.live} target="_blank" rel="noopener noreferrer"
+          className="flex items-center gap-2 px-4 py-2.5 rounded-lg text-xs font-bold tracking-widest uppercase transition-all duration-300"
+          style={{ background: "rgb(57,255,20)", color: "#0a0a0a" }}
+          onMouseOver={e => { e.currentTarget.style.boxShadow = "0 0 18px rgba(57,255,20,0.5)" }}
+          onMouseOut={e => { e.currentTarget.style.boxShadow = "none" }}>
+          <ExternalLink size={13} /> Live
+        </a>
+      )}
+    </div>
   )
 }

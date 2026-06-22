@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Expletus_Sans } from "next/font/google";
 import { Navbar } from "@/components/ui/navbar";
+import { Chatbot } from "@/components/ui/chatbot";
 import "./globals.css";
 
 const excletusSans = Expletus_Sans({
@@ -27,6 +28,7 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col bg-[#0a0a0a] text-zinc-50">
         <Navbar />
         {children}
+        <Chatbot />
       </body>
     </html>
   );
