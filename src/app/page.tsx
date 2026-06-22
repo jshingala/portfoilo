@@ -191,8 +191,8 @@ export default function Home() {
   return (
     <div className="bg-[#0a0a0a]">
 
-      {/* Fixed Spline robot — full-screen background */}
-      <div className="fixed inset-0 w-full h-screen hidden md:block" style={{ zIndex: 1 }}>
+      {/* Fixed Spline robot — full-screen background, shifted right */}
+      <div className="fixed inset-0 w-full h-screen hidden md:block" style={{ zIndex: 1, transform: 'translateX(20%)' }}>
         <SplineScene
           scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
           className="w-full h-full"
