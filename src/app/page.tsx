@@ -158,21 +158,28 @@ export default function Home() {
 
   // Map full-screen cursor onto Spline canvas so robot tracks from anywhere on the page
   useEffect(() => {
-    const forward = (e: MouseEvent) => {
+    const forward = (e: PointerEvent) => {
       const canvas = document.querySelector('canvas') as HTMLCanvasElement | null
-      if (!canvas) return
+      if (!canvas || e.target === canvas) return
       const rect = canvas.getBoundingClientRect()
-      // Scale the global cursor position proportionally to canvas coordinates
       const mappedX = rect.left + (e.clientX / window.innerWidth) * rect.width
       const mappedY = rect.top + (e.clientY / window.innerHeight) * rect.height
+      canvas.dispatchEvent(new PointerEvent('pointermove', {
+        bubbles: false,
+        clientX: mappedX,
+        clientY: mappedY,
+        pointerType: 'mouse',
+        pointerId: 1,
+      }))
       canvas.dispatchEvent(new MouseEvent('mousemove', {
         bubbles: false,
         clientX: mappedX,
         clientY: mappedY,
       }))
     }
-    window.addEventListener('mousemove', forward)
-    return () => window.removeEventListener('mousemove', forward)
+    // Use capture:true so we intercept before Framer Motion stops propagation
+    window.addEventListener('pointermove', forward, true)
+    return () => window.removeEventListener('pointermove', forward, true)
   }, [])
   const heroOpacity = useTransform(heroP, [0, 0.6], [1, 0])
   const heroY = useTransform(heroP, [0, 0.6], [0, -40])
