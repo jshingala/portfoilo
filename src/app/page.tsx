@@ -65,7 +65,7 @@ function Beat({ b, i, total, prog }: {
           {b.headline}
         </h2>
         <p className="text-zinc-500 leading-relaxed"
-          style={{ fontSize: "clamp(0.9rem, 1.25vw, 1.05rem)" }}>
+          style={{ fontSize: "clamp(1rem, 1.45vw, 1.15rem)" }}>
           {b.body}
         </p>
       </div>
@@ -94,6 +94,7 @@ function StorySection() {
 
 /* ── Skills + data ────────────────────────────────────────── */
 const skills = [
+  "Agentic AI", "RAG",
   "PyTorch", "Triton", "CUDA", "cuDNN", "NCCL",
   "Python", "C++", "JavaScript",
   "TensorFlow", "HPC", "A100",
@@ -201,7 +202,7 @@ export default function Home() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, ease: EXPO, delay: 0.22 }}
             className="text-zinc-500 leading-relaxed max-w-[28ch]"
-            style={{ fontSize: "clamp(0.9rem, 1.3vw, 1.05rem)" }}
+            style={{ fontSize: "clamp(1rem, 1.5vw, 1.15rem)" }}
           >
             Building intelligence from the silicon up: GPU kernels, agentic AI, full-stack deployment.
           </motion.p>
@@ -316,13 +317,13 @@ export default function Home() {
             transition={{ duration: 0.6, ease: EXPO, delay: 0.04 }}
           >
             CS @ CSU Sacramento.{" "}
-            <span style={{ color: "rgb(57,255,20)" }}>GPA 3.8.</span>
+            <span style={{ color: "rgb(57,255,20)" }}>Major GPA 3.8.</span>
             <br />NVIDIA Certified.
           </motion.h2>
 
           <motion.p
             className="text-zinc-500 leading-[1.9] max-w-2xl mb-16"
-            style={{ fontSize: "clamp(0.875rem, 1.2vw, 1rem)" }}
+            style={{ fontSize: "clamp(0.95rem, 1.35vw, 1.1rem)" }}
             initial={{ opacity: 0, y: 14 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -354,7 +355,7 @@ export default function Home() {
                   hidden:   { opacity: 0, scale: 0.82, y: 9 },
                   visible:  { opacity: 1, scale: 1,    y: 0, transition: { duration: 0.3, ease: EXPO } },
                 }}
-                className="px-3 py-1.5 rounded-lg font-mono text-[11px] tracking-wide uppercase cursor-default"
+                className="px-3 py-1.5 rounded-lg font-mono text-[12px] tracking-wide uppercase cursor-default"
                 style={{
                   border: "1px solid rgba(57,255,20,0.16)",
                   color: "rgba(57,255,20,0.65)",
