@@ -48,10 +48,11 @@ function Beat({ b, i, total, prog }: {
     <motion.div style={{ opacity, y }}
       className="absolute inset-0 flex items-center px-6 sm:px-12 md:px-20 lg:px-28 pointer-events-none">
       <div className="max-w-xl">
-        <div className="flex items-center gap-3 mb-8">
+        <div className="flex items-center gap-2 mb-8">
           <span className="font-mono text-[11px] tracking-[0.4em] uppercase"
             style={{ color: "rgba(57,255,20,0.45)" }}>{b.idx}</span>
-          <div className="w-6 h-px" style={{ background: "rgba(57,255,20,0.3)" }} />
+          <span className="font-mono text-[11px] tracking-[0.4em] uppercase"
+            style={{ color: "rgba(57,255,20,0.25)" }}>·</span>
           <span className="font-mono text-[11px] tracking-[0.4em] uppercase"
             style={{ color: "rgba(57,255,20,0.45)" }}>{b.label}</span>
         </div>
@@ -172,9 +173,7 @@ export default function Home() {
             initial={{ opacity: 0, x: -18 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.55, ease: EXPO }}
-            className="flex items-center gap-3"
           >
-            <div className="w-5 h-px" style={{ background: "rgb(57,255,20)" }} />
             <span className="font-mono text-xs tracking-[0.35em] uppercase"
               style={{ color: "rgb(57,255,20)" }}>
               AI / GPU Engineer
@@ -298,13 +297,12 @@ export default function Home() {
         <div className="max-w-5xl mx-auto">
 
           <motion.div
-            className="flex items-center gap-3 mb-5"
+            className="mb-5"
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
             viewport={{ once: true }}
             transition={{ duration: 0.4 }}
           >
-            <div className="w-6 h-px" style={{ background: "rgba(57,255,20,0.5)" }} />
             <span className="font-mono text-[11px] tracking-[0.4em] uppercase"
               style={{ color: "rgba(57,255,20,0.55)" }}>About</span>
           </motion.div>

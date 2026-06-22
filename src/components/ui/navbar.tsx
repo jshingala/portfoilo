@@ -65,14 +65,6 @@ export function Navbar() {
                 onMouseOut={e => { if (!active) e.currentTarget.style.color = "rgba(255,255,255,0.45)" }}
               >
                 {link.label}
-                {active && (
-                  <motion.span
-                    layoutId="nav-underline"
-                    className="absolute -bottom-0.5 left-0 right-0 h-px rounded-full"
-                    style={{ background: neon, boxShadow: "0 0 8px rgba(57,255,20,0.7)" }}
-                    transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                  />
-                )}
               </a>
             )
           })}
