@@ -25,7 +25,7 @@ const experience = [
     bullets: [
       "Deployed a production **agentic RAG** system on **Microsoft Teams** for a water/wastewater SCADA firm; built a document ingestion + **Azure AI Search** vector pipeline used by engineers daily, raising productivity by **87%**.",
       "Built **API-connected automations** (Bill of Materials, PCN, Monday tools) across **5+ data sources**, including an **MCP integration** to Monday.com and **Power Automate** flows.",
-      "Prototyped a **voice-to-documentation** tool for field engineers — speech converted to structured technical docs aligned with company standards.",
+      "Prototyped a **voice-to-documentation** tool for field engineers. Speech converted to structured technical docs aligned with company standards.",
       "Built an **LLM evaluation framework** with **15+ automated checks** + human-in-the-loop review, keeping output accurate for non-technical staff.",
     ],
     tags: ["Python", "Azure AI Search", "Agentic RAG", "LLMs", "MCP", "Power Automate", "LLMOps"],

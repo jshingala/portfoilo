@@ -20,11 +20,11 @@ const spaceMono = Space_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Jenil Shingala — AI / GPU Engineer",
+  title: "Jenil Shingala | AI / GPU Engineer",
   description:
-    "Portfolio of Jenil Shingala — AI / GPU Engineer specializing in agentic AI, CUDA kernel programming, LLMOps, and full-stack ML deployment.",
+    "Portfolio of Jenil Shingala, AI / GPU Engineer specializing in agentic AI, CUDA kernel programming, LLMOps, and full-stack ML deployment.",
   openGraph: {
-    title: "Jenil Shingala — AI / GPU Engineer",
+    title: "Jenil Shingala | AI / GPU Engineer",
     description:
       "Agentic AI · GPU Kernels · CUDA · LLMOps · Full-Stack AI · NVIDIA Certified",
     type: "website",
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Jenil Shingala — AI / GPU Engineer",
+    title: "Jenil Shingala | AI / GPU Engineer",
     description: "Agentic AI · GPU Kernels · CUDA · LLMOps · Full-Stack AI",
   },
 };

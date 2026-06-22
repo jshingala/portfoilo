@@ -13,13 +13,13 @@ const beats = [
   {
     idx: "01", label: "Agentic AI",
     headline: "AI that works\nfor engineers.",
-    body: "Production agentic RAG on Microsoft Teams — 87% productivity gain for water/wastewater SCADA clients.",
+    body: "Production agentic RAG on Microsoft Teams. 87% productivity gain for water/wastewater SCADA clients.",
     green: false,
   },
   {
     idx: "02", label: "GPU Kernels",
     headline: "Compute from\nfirst principles.",
-    body: "FlashAttention in Triton from scratch — 250× memory reduction vs naive attention at 8,192 token sequence length.",
+    body: "FlashAttention in Triton from scratch. 250× memory reduction vs naive attention at 8,192 token sequence length.",
     green: true,
   },
   {
@@ -31,7 +31,7 @@ const beats = [
   {
     idx: "04", label: "Systems",
     headline: "Down to\nthe metal.",
-    body: "C++ firmware, embedded Linux, Raspberry Pi hardware — from hardware boundary to production deployment.",
+    body: "C++ firmware, embedded Linux, Raspberry Pi hardware. From hardware boundary to production deployment.",
     green: false,
   },
 ]
@@ -105,9 +105,9 @@ const certs = [
   { name: "AI Infrastructure & Operations", href: "https://www.credly.com/badges/d1957df0-66d2-49ed-9052-f6221c705a68/linked_in?t=tghd7z" },
 ]
 const honors = [
-  "Dean's Honor List — CSU Sacramento",
-  "NCA-AIIO Bootcamp — AI Infrastructure & Ops",
-  "NCA GENL Bootcamp — Generative AI",
+  "Dean's Honor List, CSU Sacramento",
+  "NCA-AIIO Bootcamp, AI Infrastructure & Ops",
+  "NCA GENL Bootcamp, Generative AI",
   "Best Sportsperson Award",
 ]
 
@@ -204,7 +204,7 @@ export default function Home() {
             className="text-zinc-500 leading-relaxed max-w-[28ch]"
             style={{ fontSize: "clamp(0.9rem, 1.3vw, 1.05rem)" }}
           >
-            Building intelligence from the silicon up — GPU kernels, agentic AI, full-stack deployment.
+            Building intelligence from the silicon up: GPU kernels, agentic AI, full-stack deployment.
           </motion.p>
 
           {/* CTAs */}
@@ -400,7 +400,7 @@ export default function Home() {
                       onMouseOut={e => (e.currentTarget.style.color = "rgba(57,255,20,0.65)")}
                     >
                       <Award size={14} className="mt-0.5 shrink-0" />
-                      <span className="font-medium">NVIDIA Certified — {c.name}</span>
+                      <span className="font-medium">NVIDIA Certified · {c.name}</span>
                       <ExternalLink size={11} className="mt-0.5 shrink-0 opacity-40" />
                     </a>
                   </li>
