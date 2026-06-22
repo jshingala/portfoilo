@@ -158,28 +158,35 @@ export default function Home() {
 
   // Map full-screen cursor onto Spline canvas so robot tracks from anywhere on the page
   useEffect(() => {
-    const forward = (e: PointerEvent) => {
+    let lastX = window.innerWidth * 0.75
+    let lastY = window.innerHeight * 0.5
+
+    const dispatchToCanvas = (clientX: number, clientY: number) => {
       const canvas = document.querySelector('canvas') as HTMLCanvasElement | null
-      if (!canvas || e.target === canvas) return
+      if (!canvas) return
       const rect = canvas.getBoundingClientRect()
-      const mappedX = rect.left + (e.clientX / window.innerWidth) * rect.width
-      const mappedY = rect.top + (e.clientY / window.innerHeight) * rect.height
-      canvas.dispatchEvent(new PointerEvent('pointermove', {
-        bubbles: false,
-        clientX: mappedX,
-        clientY: mappedY,
-        pointerType: 'mouse',
-        pointerId: 1,
-      }))
-      canvas.dispatchEvent(new MouseEvent('mousemove', {
-        bubbles: false,
-        clientX: mappedX,
-        clientY: mappedY,
-      }))
+      const mappedX = rect.left + (clientX / window.innerWidth) * rect.width
+      const mappedY = rect.top + (clientY / window.innerHeight) * rect.height
+      canvas.dispatchEvent(new PointerEvent('pointermove', { bubbles: false, clientX: mappedX, clientY: mappedY, pointerType: 'mouse', pointerId: 1 }))
+      canvas.dispatchEvent(new MouseEvent('mousemove', { bubbles: false, clientX: mappedX, clientY: mappedY }))
     }
-    // Use capture:true so we intercept before Framer Motion stops propagation
-    window.addEventListener('pointermove', forward, true)
-    return () => window.removeEventListener('pointermove', forward, true)
+
+    // mousemove tracks actual cursor (not scroll gestures)
+    const onMouseMove = (e: MouseEvent) => {
+      lastX = e.clientX
+      lastY = e.clientY
+      dispatchToCanvas(lastX, lastY)
+    }
+
+    // On scroll, re-fire last known cursor so robot holds its look direction
+    const onScroll = () => dispatchToCanvas(lastX, lastY)
+
+    window.addEventListener('mousemove', onMouseMove, true)
+    window.addEventListener('scroll', onScroll, true)
+    return () => {
+      window.removeEventListener('mousemove', onMouseMove, true)
+      window.removeEventListener('scroll', onScroll, true)
+    }
   }, [])
   const heroOpacity = useTransform(heroP, [0, 0.6], [1, 0])
   const heroY = useTransform(heroP, [0, 0.6], [0, -40])
