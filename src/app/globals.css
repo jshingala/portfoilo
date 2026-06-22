@@ -1,11 +1,5 @@
 @import "tailwindcss";
 
-@font-face {
-  font-family: 'Direction';
-  src: url('/fonts/Direction.otf') format('opentype');
-  font-weight: normal;
-  font-style: normal;
-}
 
 :root {
   --background: #0a0a0a;
