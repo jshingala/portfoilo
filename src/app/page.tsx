@@ -156,17 +156,19 @@ export default function Home() {
   const heroRef = useRef<HTMLElement>(null)
   const { scrollYProgress: heroP } = useScroll({ target: heroRef, offset: ["start start", "end start"] })
 
-  // Forward global cursor position to Spline canvas so robot tracks from anywhere on screen
+  // Map full-screen cursor onto Spline canvas so robot tracks from anywhere on the page
   useEffect(() => {
     const forward = (e: MouseEvent) => {
       const canvas = document.querySelector('canvas') as HTMLCanvasElement | null
       if (!canvas) return
+      const rect = canvas.getBoundingClientRect()
+      // Scale the global cursor position proportionally to canvas coordinates
+      const mappedX = rect.left + (e.clientX / window.innerWidth) * rect.width
+      const mappedY = rect.top + (e.clientY / window.innerHeight) * rect.height
       canvas.dispatchEvent(new MouseEvent('mousemove', {
         bubbles: false,
-        clientX: e.clientX,
-        clientY: e.clientY,
-        screenX: e.screenX,
-        screenY: e.screenY,
+        clientX: mappedX,
+        clientY: mappedY,
       }))
     }
     window.addEventListener('mousemove', forward)
