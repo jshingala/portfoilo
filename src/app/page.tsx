@@ -142,7 +142,7 @@ export default function Home() {
   }, [])
 
   return (
-    <div style={{ background: "#080808" }}>
+    <div>
 
       {/* Fixed robot — shifted right so it fills the right half */}
       <div className="fixed inset-0 pointer-events-none" style={{ zIndex: 1 }}>
@@ -159,23 +159,9 @@ export default function Home() {
         className="relative h-screen flex items-center overflow-hidden"
         style={{ zIndex: 10 }}>
 
-        {/* Video — clipped to left half via mask so it never washes out the robot */}
-        <video
-          autoPlay loop muted playsInline
-          className="absolute inset-0 w-full h-full object-cover pointer-events-none"
-          style={{
-            zIndex: 0,
-            opacity: 0.7,
-            maskImage: "linear-gradient(to right, black 0%, black 45%, transparent 70%)",
-            WebkitMaskImage: "linear-gradient(to right, black 0%, black 45%, transparent 70%)",
-          }}
-        >
-          <source src="/bg.mp4" type="video/mp4" />
-        </video>
-
-        {/* Gradient — text-side readability */}
+        {/* Gradient — extra darkening on text side only; global veil in layout handles the rest */}
         <div className="absolute inset-0 pointer-events-none"
-          style={{ zIndex: 1, background: "linear-gradient(100deg, rgba(8,8,8,0.82) 0%, rgba(8,8,8,0.6) 38%, rgba(8,8,8,0.15) 60%, transparent 75%)" }} />
+          style={{ zIndex: 1, background: "linear-gradient(100deg, rgba(8,8,8,0.7) 0%, rgba(8,8,8,0.45) 40%, rgba(8,8,8,0.1) 65%, transparent 80%)" }} />
 
         <Spotlight size={520} springOptions={{ bounce: 0, damping: 28 }} />
 
@@ -308,7 +294,7 @@ export default function Home() {
       {/* ── About ── */}
       <section id="about"
         className="relative px-6 sm:px-10 md:px-16 lg:px-24 py-28"
-        style={{ background: "#080808", borderTop: "1px solid rgba(255,255,255,0.05)", zIndex: 10 }}>
+        style={{ borderTop: "1px solid rgba(255,255,255,0.05)", zIndex: 10 }}>
         <div className="max-w-5xl mx-auto">
 
           <motion.div

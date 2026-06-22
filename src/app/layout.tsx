@@ -54,12 +54,39 @@ export default function RootLayout({
         <a href="#main-content" className="skip-link">
           Skip to main content
         </a>
+
+        {/* Fixed video background — behind all pages */}
+        <div
+          style={{
+            position: "fixed",
+            inset: 0,
+            zIndex: 0,
+            pointerEvents: "none",
+            overflow: "hidden",
+          }}
+        >
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            style={{ width: "100%", height: "100%", objectFit: "cover", opacity: 0.6 }}
+          >
+            <source src="/bg.mp4" type="video/mp4" />
+          </video>
+          {/* Global dark veil — ensures text is readable on every page */}
+          <div style={{ position: "absolute", inset: 0, background: "rgba(8,8,8,0.58)" }} />
+        </div>
+
+        {/* All content sits above the video at z-index 1 */}
         <Providers>
-          <Navbar />
-          <main id="main-content">
-            {children}
-          </main>
-          <Chatbot />
+          <div style={{ position: "relative", zIndex: 1, display: "flex", flexDirection: "column", minHeight: "100vh" }}>
+            <Navbar />
+            <main id="main-content" style={{ flex: 1 }}>
+              {children}
+            </main>
+            <Chatbot />
+          </div>
         </Providers>
       </body>
     </html>
