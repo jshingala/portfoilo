@@ -98,28 +98,28 @@ export default function Experience() {
 
                 {/* Mobile: single full-width column */}
                 <div className="md:hidden pl-10">
-                  <div className="rounded-xl p-5 border"
+                  <motion.div className="rounded-xl p-5 border" whileHover={{ y: -5, boxShadow: "0 0 48px rgba(57,255,20,0.18), 0 20px 40px rgba(0,0,0,0.5)" }} transition={{ type: "spring", stiffness: 340, damping: 22 }}
                     style={{ background: "rgba(0,20,0,0.6)", borderColor: "rgba(57,255,20,0.25)", boxShadow: "0 0 20px rgba(57,255,20,0.05)" }}>
                     <ExperienceCard job={job} align="left" />
-                  </div>
+                  </motion.div>
                 </div>
 
                 {/* Desktop: alternating two-column */}
                 <div className="hidden md:flex items-start">
                   <div className="w-1/2 pr-12 flex justify-end">
                     {isLeft && (
-                      <div className="w-full max-w-md rounded-xl p-6 border"
+                      <motion.div className="w-full max-w-md rounded-xl p-6 border" whileHover={{ y: -5, boxShadow: "0 0 48px rgba(57,255,20,0.18), 0 20px 40px rgba(0,0,0,0.5)" }} transition={{ type: "spring", stiffness: 340, damping: 22 }}
                         style={{ background: "rgba(0,20,0,0.6)", borderColor: "rgba(57,255,20,0.25)", boxShadow: "0 0 20px rgba(57,255,20,0.05)" }}>
                         <ExperienceCard job={job} align="right" />
-                      </div>
+                      </motion.div>
                     )}
                   </div>
                   <div className="w-1/2 pl-12 flex justify-start">
                     {!isLeft && (
-                      <div className="w-full max-w-md rounded-xl p-6 border"
+                      <motion.div className="w-full max-w-md rounded-xl p-6 border" whileHover={{ y: -5, boxShadow: "0 0 48px rgba(57,255,20,0.18), 0 20px 40px rgba(0,0,0,0.5)" }} transition={{ type: "spring", stiffness: 340, damping: 22 }}
                         style={{ background: "rgba(0,20,0,0.6)", borderColor: "rgba(57,255,20,0.25)", boxShadow: "0 0 20px rgba(57,255,20,0.05)" }}>
                         <ExperienceCard job={job} align="left" />
-                      </div>
+                      </motion.div>
                     )}
                   </div>
                 </div>

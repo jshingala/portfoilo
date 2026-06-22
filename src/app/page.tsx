@@ -6,6 +6,8 @@ import { Spotlight } from "@/components/ui/spotlight"
 import { motion, useScroll, useTransform } from "framer-motion"
 import { Mail, GraduationCap, MapPin, Globe, Award, ExternalLink, Phone } from "lucide-react"
 
+const EXPO = [0.16, 1, 0.3, 1] as const   // expo-out — fast start, silky settle
+
 /* ── Interactive Name ─────────────────────────────────────── */
 function InteractiveName({ name, color = "rgb(161,161,170)", hoverColor = "rgb(228,228,231)" }: {
   name: string; color?: string; hoverColor?: string
@@ -18,7 +20,7 @@ function InteractiveName({ name, color = "rgb(161,161,170)", hoverColor = "rgb(2
           className="interactive-char"
           style={{ '--char-color': color, '--char-hover-color': hoverColor } as CSSProperties}
         >
-          {char === " " ? " " : char}
+          {char === " " ? " " : char}
         </span>
       ))}
     </span>
@@ -113,7 +115,6 @@ function StorySection() {
   return (
     <div ref={ref} style={{ height: `${beats.length * 100}vh`, position: "relative", zIndex: 10 }}>
       <div className="sticky top-0 h-screen overflow-hidden pointer-events-none">
-        {/* Vertical progress line */}
         <div className="absolute right-10 top-[20%] bottom-[20%] w-px hidden md:block"
           style={{ background: "rgba(57,255,20,0.12)" }}>
           <motion.div style={{ height: lineH, width: "100%", background: "rgb(57,255,20)",
@@ -154,13 +155,23 @@ const honors = [
   "NCA GENL BootCamp — Generative AI",
 ]
 
+/* skill tag variants — stagger controlled by parent */
+const skillContainer = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.03 } },
+}
+const skillItem = {
+  hidden:  { opacity: 0, scale: 0.8,  y: 10 },
+  visible: { opacity: 1, scale: 1,    y: 0,
+    transition: { duration: 0.35, ease: EXPO } },
+}
+
 /* ── Page ─────────────────────────────────────────────────── */
 export default function Home() {
   const heroRef = useRef<HTMLElement>(null)
   const { scrollYProgress: heroP } = useScroll({ target: heroRef, offset: ["start start", "end start"] })
 
-  // Map full-screen cursor onto Spline canvas so robot tracks from anywhere on the page.
-  // Throttled to one dispatch per animation frame to prevent Spline runtime stack overflow.
+  // Throttled to one rAF dispatch to prevent Spline runtime stack overflow.
   useEffect(() => {
     let lastX = window.innerWidth * 0.75
     let lastY = window.innerHeight * 0.5
@@ -175,8 +186,7 @@ export default function Home() {
     }
 
     const schedule = (x: number, y: number) => {
-      lastX = x
-      lastY = y
+      lastX = x; lastY = y
       if (rafId === null) rafId = requestAnimationFrame(flushToCanvas)
     }
 
@@ -193,12 +203,12 @@ export default function Home() {
   }, [])
 
   const heroOpacity = useTransform(heroP, [0, 0.6], [1, 0])
-  const heroY = useTransform(heroP, [0, 0.6], [0, -40])
+  const heroY      = useTransform(heroP, [0, 0.6], [0, -40])
 
   return (
     <div className="bg-[#0a0a0a]">
 
-      {/* Fixed Spline robot — pointer-events:none so browser skips hit-testing on WebGL canvas */}
+      {/* Fixed Spline robot — pointer-events:none skips hit-testing on WebGL */}
       <div className="fixed inset-0 w-full h-screen hidden md:block pointer-events-none"
         style={{ zIndex: 1, transform: 'translateX(20%)' }}>
         <SplineScene
@@ -208,29 +218,47 @@ export default function Home() {
       </div>
 
       {/* ── Hero ── */}
-      <section ref={heroRef} id="home" className="relative h-screen flex items-center overflow-hidden pt-16 pointer-events-none"
+      <section ref={heroRef} id="home"
+        className="relative h-screen flex items-center overflow-hidden pt-16 pointer-events-none"
         style={{ zIndex: 10 }}>
-        {/* Dark gradient so text stays readable over full-screen robot */}
-        <div className="absolute inset-0 pointer-events-none" style={{ background: "linear-gradient(to right, rgba(10,10,10,0.85) 0%, rgba(10,10,10,0.5) 50%, transparent 100%)", zIndex: 0 }} />
+        <div className="absolute inset-0 pointer-events-none"
+          style={{ background: "linear-gradient(to right, rgba(10,10,10,0.85) 0%, rgba(10,10,10,0.5) 50%, transparent 100%)", zIndex: 0 }} />
         <Spotlight size={500} springOptions={{ bounce: 0, damping: 30 }} />
 
         <motion.div style={{ opacity: heroOpacity, y: heroY }}
           className="w-full md:w-1/2 flex flex-col justify-center px-5 sm:px-10 md:px-20 lg:px-28 gap-5 relative z-10 pointer-events-auto">
 
-          <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
-            <p className="text-base md:text-lg uppercase tracking-[0.2em] text-zinc-400 mb-5 font-mono font-bold">AI / GPU Engineer</p>
+          {/* Block 1 — name + title (blur materialization) */}
+          <motion.div
+            initial={{ opacity: 0, y: 28, filter: 'blur(12px)' }}
+            animate={{ opacity: 1, y: 0,  filter: 'blur(0px)' }}
+            transition={{ duration: 0.65, ease: EXPO }}
+          >
+            {/* Clip-path scanner reveal on subtitle */}
+            <motion.p
+              className="text-base md:text-lg uppercase tracking-[0.2em] text-zinc-400 mb-5 font-mono font-bold"
+              initial={{ clipPath: 'inset(0 100% 0 0)' }}
+              animate={{ clipPath: 'inset(0 0% 0 0)' }}
+              transition={{ duration: 0.7, ease: EXPO, delay: 0.15 }}
+            >
+              AI / GPU Engineer
+            </motion.p>
             <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-semibold tracking-tight leading-[1.05] select-none">
               <InteractiveName name="Jenil" /><br />
               <InteractiveName name="Shingala" color="rgb(57,255,20)" hoverColor="rgb(180,255,150)" />
             </h1>
-            {/* CSS animation — runs on compositor thread, zero JS cost */}
             <p className="text-2xl md:text-3xl font-semibold tracking-widest mt-3 animate-neon-cycle">
               Portfolio
             </p>
           </motion.div>
 
-          <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.15 }}
-            className="flex flex-col gap-3">
+          {/* Block 2 — contact info */}
+          <motion.div
+            initial={{ opacity: 0, y: 24, filter: 'blur(8px)' }}
+            animate={{ opacity: 1, y: 0,  filter: 'blur(0px)' }}
+            transition={{ duration: 0.6, ease: EXPO, delay: 0.18 }}
+            className="flex flex-col gap-3"
+          >
             <p className="text-base text-zinc-400 leading-relaxed">
               Generative AI · Agentic AI · LLMOps · MLOps<br />
               CUDA Kernel Programming · GPU Computing · Azure AI
@@ -259,76 +287,76 @@ export default function Home() {
               <Globe size={16} className="text-zinc-500 shrink-0" />linkedin.com/in/jenil-shingala-39685a219
             </a>
 
-            {/* NVIDIA Certification badges */}
+            {/* NVIDIA badges */}
             <div className="pt-3 mt-1 border-t flex flex-col gap-2.5" style={{ borderColor: "rgba(57,255,20,0.12)" }}>
               <p className="text-xs font-mono tracking-[0.25em] uppercase" style={{ color: "rgba(57,255,20,0.5)" }}>
                 NVIDIA Certified
               </p>
               <div className="flex flex-col gap-2">
-                <a href="https://www.credly.com/badges/cffa007f-1701-47cb-9f94-dcb607888db1/linked_in?t=tgwk81"
-                  target="_blank" rel="noopener noreferrer"
-                  className="group inline-flex items-center gap-2.5 px-4 py-2.5 rounded-lg w-fit transition-all duration-200"
-                  style={{ border: "1px solid rgba(57,255,20,0.3)", background: "rgba(57,255,20,0.04)" }}
-                  onMouseOver={e => {
-                    e.currentTarget.style.background = "rgba(57,255,20,0.1)"
-                    e.currentTarget.style.borderColor = "rgba(57,255,20,0.65)"
-                    e.currentTarget.style.boxShadow = "0 0 16px rgba(57,255,20,0.15)"
-                  }}
-                  onMouseOut={e => {
-                    e.currentTarget.style.background = "rgba(57,255,20,0.04)"
-                    e.currentTarget.style.borderColor = "rgba(57,255,20,0.3)"
-                    e.currentTarget.style.boxShadow = "none"
-                  }}>
-                  <Award size={15} style={{ color: "rgb(57,255,20)" }} />
-                  <span className="text-sm font-semibold tracking-wide" style={{ color: "rgb(57,255,20)" }}>
-                    Generative AI LLMs
-                  </span>
-                  <ExternalLink size={12} className="opacity-50" style={{ color: "rgb(57,255,20)" }} />
-                </a>
-                <a href="https://www.credly.com/badges/d1957df0-66d2-49ed-9052-f6221c705a68/linked_in?t=tghd7z"
-                  target="_blank" rel="noopener noreferrer"
-                  className="group inline-flex items-center gap-2.5 px-4 py-2.5 rounded-lg w-fit transition-all duration-200"
-                  style={{ border: "1px solid rgba(57,255,20,0.3)", background: "rgba(57,255,20,0.04)" }}
-                  onMouseOver={e => {
-                    e.currentTarget.style.background = "rgba(57,255,20,0.1)"
-                    e.currentTarget.style.borderColor = "rgba(57,255,20,0.65)"
-                    e.currentTarget.style.boxShadow = "0 0 16px rgba(57,255,20,0.15)"
-                  }}
-                  onMouseOut={e => {
-                    e.currentTarget.style.background = "rgba(57,255,20,0.04)"
-                    e.currentTarget.style.borderColor = "rgba(57,255,20,0.3)"
-                    e.currentTarget.style.boxShadow = "none"
-                  }}>
-                  <Award size={15} style={{ color: "rgb(57,255,20)" }} />
-                  <span className="text-sm font-semibold tracking-wide" style={{ color: "rgb(57,255,20)" }}>
-                    AI Infrastructure & Operations
-                  </span>
-                  <ExternalLink size={12} className="opacity-50" style={{ color: "rgb(57,255,20)" }} />
-                </a>
+                {[
+                  { label: "Generative AI LLMs", href: "https://www.credly.com/badges/cffa007f-1701-47cb-9f94-dcb607888db1/linked_in?t=tgwk81" },
+                  { label: "AI Infrastructure & Operations", href: "https://www.credly.com/badges/d1957df0-66d2-49ed-9052-f6221c705a68/linked_in?t=tghd7z" },
+                ].map(({ label, href }) => (
+                  <motion.a
+                    key={label}
+                    href={href} target="_blank" rel="noopener noreferrer"
+                    className="group inline-flex items-center gap-2.5 px-4 py-2.5 rounded-lg w-fit"
+                    style={{ border: "1px solid rgba(57,255,20,0.3)", background: "rgba(57,255,20,0.04)" }}
+                    whileHover={{ scale: 1.02, boxShadow: "0 0 20px rgba(57,255,20,0.18)" }}
+                    transition={{ type: 'spring', stiffness: 400, damping: 22 }}
+                    onMouseOver={e => {
+                      e.currentTarget.style.background = "rgba(57,255,20,0.1)"
+                      e.currentTarget.style.borderColor = "rgba(57,255,20,0.65)"
+                    }}
+                    onMouseOut={e => {
+                      e.currentTarget.style.background = "rgba(57,255,20,0.04)"
+                      e.currentTarget.style.borderColor = "rgba(57,255,20,0.3)"
+                    }}
+                  >
+                    <Award size={15} style={{ color: "rgb(57,255,20)" }} />
+                    <span className="text-sm font-semibold tracking-wide" style={{ color: "rgb(57,255,20)" }}>{label}</span>
+                    <ExternalLink size={12} className="opacity-50" style={{ color: "rgb(57,255,20)" }} />
+                  </motion.a>
+                ))}
               </div>
             </div>
           </motion.div>
 
-          <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.3 }}
-            className="flex gap-3">
-            <a href="mailto:jenilshingala2002@gmail.com"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-semibold transition-all duration-200"
+          {/* Block 3 — CTA buttons */}
+          <motion.div
+            initial={{ opacity: 0, y: 20, filter: 'blur(6px)' }}
+            animate={{ opacity: 1, y: 0,  filter: 'blur(0px)' }}
+            transition={{ duration: 0.55, ease: EXPO, delay: 0.34 }}
+            className="flex gap-3"
+          >
+            <motion.a
+              href="mailto:jenilshingala2002@gmail.com"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-semibold"
               style={{ background: "rgb(57,255,20)", color: "#0a0a0a" }}
-              onMouseOver={e => (e.currentTarget.style.boxShadow = "0 0 24px rgba(57,255,20,0.5)")}
-              onMouseOut={e => (e.currentTarget.style.boxShadow = "none")}>
+              whileHover={{ scale: 1.04, boxShadow: "0 0 28px rgba(57,255,20,0.55)" }}
+              whileTap={{ scale: 0.97 }}
+              transition={{ type: 'spring', stiffness: 380, damping: 20 }}
+            >
               Get in touch
-            </a>
-            <a href="#about"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-full border text-sm font-medium text-zinc-300 hover:text-zinc-100 transition-colors duration-200"
-              style={{ borderColor: "rgba(57,255,20,0.4)" }}>
+            </motion.a>
+            <motion.a
+              href="#about"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-full border text-sm font-medium text-zinc-300 hover:text-zinc-100"
+              style={{ borderColor: "rgba(57,255,20,0.4)" }}
+              whileHover={{ scale: 1.03, borderColor: "rgba(57,255,20,0.8)" }}
+              whileTap={{ scale: 0.97 }}
+              transition={{ type: 'spring', stiffness: 380, damping: 20 }}
+            >
               About Me
-            </a>
+            </motion.a>
           </motion.div>
 
-          {/* Scroll hint — inner bounce is a CSS animation (compositor thread) */}
+          {/* Scroll hint */}
           <motion.div
-            initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1, duration: 0.8 }}
-            className="mt-2 flex flex-col items-start gap-1">
+            initial={{ opacity: 0 }} animate={{ opacity: 1 }}
+            transition={{ delay: 1.1, duration: 0.6, ease: EXPO }}
+            className="mt-2 flex flex-col items-start gap-1"
+          >
             <div className="animate-scroll-bounce">
               <div className="w-px h-10" style={{ background: "linear-gradient(to bottom, rgba(57,255,20,0.7), transparent)" }} />
             </div>
@@ -343,13 +371,27 @@ export default function Home() {
       {/* ── About Me ── */}
       <section id="about" className="relative bg-[#0a0a0a] px-5 sm:px-10 md:px-20 lg:px-28 py-24 border-t"
         style={{ borderColor: "rgba(57,255,20,0.1)", zIndex: 10 }}>
-        <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }} transition={{ duration: 0.6 }} className="max-w-4xl mx-auto">
+        <div className="max-w-4xl mx-auto">
 
-          <h2 className="text-4xl md:text-5xl font-bold tracking-widest uppercase mb-10"
-            style={{ color: "rgb(57,255,20)" }}>About Me</h2>
+          {/* Clip-path scanner reveal on section heading */}
+          <motion.h2
+            className="text-4xl md:text-5xl font-bold tracking-widest uppercase mb-10"
+            style={{ color: "rgb(57,255,20)" }}
+            initial={{ clipPath: 'inset(0 100% 0 0)', opacity: 1 }}
+            whileInView={{ clipPath: 'inset(0 0% 0 0)' }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.65, ease: EXPO }}
+          >
+            About Me
+          </motion.h2>
 
-          <p className="text-zinc-300 text-lg leading-8 mb-12">
+          <motion.p
+            className="text-zinc-300 text-lg leading-8 mb-12"
+            initial={{ opacity: 0, y: 20, filter: 'blur(6px)' }}
+            whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, ease: EXPO }}
+          >
             I am a Computer Science student at California State University, Sacramento with a{" "}
             <strong style={{ color: "rgb(57,255,20)" }}>Major GPA : 3.8</strong>, specializing in{" "}
             <strong style={{ color: "rgb(57,255,20)" }}>AI, GPU computing, and machine learning</strong>.
@@ -357,23 +399,47 @@ export default function Home() {
             infrastructure on AWS, and engineering embedded systems in C++. I hold two{" "}
             <strong style={{ color: "rgb(57,255,20)" }}>NVIDIA certifications</strong> in Generative AI
             and AI Infrastructure, graduating <strong style={{ color: "rgb(57,255,20)" }}>Fall 2025</strong>.
-          </p>
+          </motion.p>
 
           <p className="text-xs uppercase tracking-[0.2em] text-zinc-500 mb-4 font-mono">Skills</p>
-          <div className="flex flex-wrap gap-2 mb-16">
+
+          {/* Staggered skills cascade */}
+          <motion.div
+            className="flex flex-wrap gap-2 mb-16"
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true, margin: "-40px" }}
+            variants={skillContainer}
+          >
             {skills.map(s => (
-              <span key={s}
-                className="px-3 py-1.5 rounded-full text-xs font-mono tracking-wider uppercase cursor-default transition-all duration-200"
+              <motion.span
+                key={s}
+                variants={skillItem}
+                className="px-3 py-1.5 rounded-full text-xs font-mono tracking-wider uppercase cursor-default transition-[background,border-color] duration-200"
                 style={{ border: "1px solid rgba(57,255,20,0.3)", color: "rgb(57,255,20)", background: "rgba(57,255,20,0.05)" }}
-                onMouseOver={e => { (e.currentTarget as HTMLElement).style.background = "rgba(57,255,20,0.15)"; (e.currentTarget as HTMLElement).style.borderColor = "rgba(57,255,20,0.7)" }}
-                onMouseOut={e => { (e.currentTarget as HTMLElement).style.background = "rgba(57,255,20,0.05)"; (e.currentTarget as HTMLElement).style.borderColor = "rgba(57,255,20,0.3)" }}>
+                onMouseOver={e => {
+                  const el = e.currentTarget as HTMLElement
+                  el.style.background = "rgba(57,255,20,0.15)"
+                  el.style.borderColor = "rgba(57,255,20,0.7)"
+                }}
+                onMouseOut={e => {
+                  const el = e.currentTarget as HTMLElement
+                  el.style.background = "rgba(57,255,20,0.05)"
+                  el.style.borderColor = "rgba(57,255,20,0.3)"
+                }}
+              >
                 {s}
-              </span>
+              </motion.span>
             ))}
-          </div>
+          </motion.div>
 
           <div className="grid md:grid-cols-2 gap-12">
-            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }}>
+            <motion.div
+              initial={{ opacity: 0, y: 20, filter: 'blur(6px)' }}
+              whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, ease: EXPO }}
+            >
               <p className="text-xs uppercase tracking-[0.2em] text-zinc-500 mb-5 font-mono">Certifications</p>
               <ul className="flex flex-col gap-3">
                 {certifications.map(c => (
@@ -390,7 +456,12 @@ export default function Home() {
                 ))}
               </ul>
             </motion.div>
-            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5, delay: 0.1 }}>
+            <motion.div
+              initial={{ opacity: 0, y: 20, filter: 'blur(6px)' }}
+              whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, ease: EXPO, delay: 0.1 }}
+            >
               <p className="text-xs uppercase tracking-[0.2em] text-zinc-500 mb-5 font-mono">Honors & Awards</p>
               <ul className="flex flex-col gap-3">
                 {honors.map(h => (
@@ -401,7 +472,7 @@ export default function Home() {
               </ul>
             </motion.div>
           </div>
-        </motion.div>
+        </div>
       </section>
     </div>
   )
