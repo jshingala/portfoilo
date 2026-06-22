@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef } from "react"
+import { useRef, useEffect } from "react"
 import { SplineScene } from "@/components/ui/splite"
 import { Spotlight } from "@/components/ui/spotlight"
 import { motion, useScroll, useTransform } from "framer-motion"
@@ -155,6 +155,23 @@ const honors = [
 export default function Home() {
   const heroRef = useRef<HTMLElement>(null)
   const { scrollYProgress: heroP } = useScroll({ target: heroRef, offset: ["start start", "end start"] })
+
+  // Forward global cursor position to Spline canvas so robot tracks from anywhere on screen
+  useEffect(() => {
+    const forward = (e: MouseEvent) => {
+      const canvas = document.querySelector('canvas') as HTMLCanvasElement | null
+      if (!canvas) return
+      canvas.dispatchEvent(new MouseEvent('mousemove', {
+        bubbles: false,
+        clientX: e.clientX,
+        clientY: e.clientY,
+        screenX: e.screenX,
+        screenY: e.screenY,
+      }))
+    }
+    window.addEventListener('mousemove', forward)
+    return () => window.removeEventListener('mousemove', forward)
+  }, [])
   const heroOpacity = useTransform(heroP, [0, 0.6], [1, 0])
   const heroY = useTransform(heroP, [0, 0.6], [0, -40])
 
