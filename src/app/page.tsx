@@ -348,7 +348,7 @@ export default function Home() {
 
           <p className="text-zinc-300 text-lg leading-8 mb-12">
             I am a Computer Science student at California State University, Sacramento with a{" "}
-            <strong style={{ color: "rgb(57,255,20)" }}>3.8 GPA</strong>, specializing in{" "}
+            <strong style={{ color: "rgb(57,255,20)" }}>Major GPA : 3.8</strong>, specializing in{" "}
             <strong style={{ color: "rgb(57,255,20)" }}>AI, GPU computing, and machine learning</strong>.
             Hands-on experience building production AI systems with Azure, deploying scalable web
             infrastructure on AWS, and engineering embedded systems in C++. I hold two{" "}
