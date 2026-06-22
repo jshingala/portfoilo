@@ -121,23 +121,30 @@ export default function Home() {
   const heroY       = useTransform(heroP, [0, 0.6], [0, -48])
 
   useEffect(() => {
-    let lx = window.innerWidth * 0.72, ly = window.innerHeight * 0.5, raf: number | null = null
-    const flush = () => {
-      raf = null
-      const c = document.querySelector('canvas') as HTMLCanvasElement | null
-      if (!c) return
-      c.dispatchEvent(new PointerEvent('pointermove', { bubbles: false, clientX: lx, clientY: ly, pointerType: 'mouse', pointerId: 1 }))
-      c.dispatchEvent(new MouseEvent('mousemove', { bubbles: false, clientX: lx, clientY: ly }))
+    let lx = window.innerWidth * 0.72
+    let ly = window.innerHeight * 0.5
+    let canvas: HTMLCanvasElement | null = null
+    let animId: number
+
+    const tick = () => {
+      // Cache canvas lookup — querySelector every frame is expensive
+      if (!canvas) canvas = document.querySelector('canvas')
+      if (canvas) {
+        canvas.dispatchEvent(new PointerEvent('pointermove', { bubbles: false, clientX: lx, clientY: ly, pointerType: 'mouse', pointerId: 1 }))
+        canvas.dispatchEvent(new MouseEvent('mousemove', { bubbles: false, clientX: lx, clientY: ly }))
+      }
+      animId = requestAnimationFrame(tick)
     }
-    const sched = (x: number, y: number) => { lx = x; ly = y; if (raf === null) raf = requestAnimationFrame(flush) }
-    const mm = (e: MouseEvent) => sched(e.clientX, e.clientY)
-    const sc = () => sched(lx, ly)
-    window.addEventListener('mousemove', mm, true)
-    window.addEventListener('scroll', sc, true)
+
+    // Only track coordinates here — dispatching happens in the rAF loop so the
+    // robot keeps looking at the cursor even when the user is just scrolling.
+    const onMouseMove = (e: MouseEvent) => { lx = e.clientX; ly = e.clientY }
+    window.addEventListener('mousemove', onMouseMove, true)
+    animId = requestAnimationFrame(tick)
+
     return () => {
-      window.removeEventListener('mousemove', mm, true)
-      window.removeEventListener('scroll', sc, true)
-      if (raf !== null) cancelAnimationFrame(raf)
+      window.removeEventListener('mousemove', onMouseMove, true)
+      cancelAnimationFrame(animId)
     }
   }, [])
 
