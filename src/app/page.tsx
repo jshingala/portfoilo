@@ -164,11 +164,8 @@ export default function Home() {
     const dispatchToCanvas = (clientX: number, clientY: number) => {
       const canvas = document.querySelector('canvas') as HTMLCanvasElement | null
       if (!canvas) return
-      const rect = canvas.getBoundingClientRect()
-      const mappedX = rect.left + (clientX / window.innerWidth) * rect.width
-      const mappedY = rect.top + (clientY / window.innerHeight) * rect.height
-      canvas.dispatchEvent(new PointerEvent('pointermove', { bubbles: false, clientX: mappedX, clientY: mappedY, pointerType: 'mouse', pointerId: 1 }))
-      canvas.dispatchEvent(new MouseEvent('mousemove', { bubbles: false, clientX: mappedX, clientY: mappedY }))
+      canvas.dispatchEvent(new PointerEvent('pointermove', { bubbles: false, clientX, clientY, pointerType: 'mouse', pointerId: 1 }))
+      canvas.dispatchEvent(new MouseEvent('mousemove', { bubbles: false, clientX, clientY }))
     }
 
     // mousemove tracks actual cursor (not scroll gestures)
@@ -194,8 +191,8 @@ export default function Home() {
   return (
     <div className="bg-[#0a0a0a]">
 
-      {/* Fixed Spline robot — shows through transparent hero + story sections */}
-      <div className="fixed right-0 top-0 w-full md:w-1/2 h-screen hidden md:block" style={{ zIndex: 1 }}>
+      {/* Fixed Spline robot — full-screen background */}
+      <div className="fixed inset-0 w-full h-screen hidden md:block" style={{ zIndex: 1 }}>
         <SplineScene
           scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
           className="w-full h-full"
@@ -205,6 +202,8 @@ export default function Home() {
       {/* ── Hero ── */}
       <section ref={heroRef} id="home" className="relative h-screen flex items-center overflow-hidden pt-16 pointer-events-none"
         style={{ zIndex: 10 }}>
+        {/* Dark gradient so text stays readable over full-screen robot */}
+        <div className="absolute inset-0 pointer-events-none" style={{ background: "linear-gradient(to right, rgba(10,10,10,0.85) 0%, rgba(10,10,10,0.5) 50%, transparent 100%)", zIndex: 0 }} />
         <Spotlight size={500} springOptions={{ bounce: 0, damping: 30 }} />
 
         <motion.div style={{ opacity: heroOpacity, y: heroY }}
