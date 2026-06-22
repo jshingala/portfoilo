@@ -5,7 +5,7 @@ import { Mail, Globe, MapPin } from "lucide-react"
 
 export default function Contact() {
   return (
-    <main className="min-h-screen bg-[#0a0a0a] flex items-center justify-center px-12 md:px-20 lg:px-28 pt-16">
+    <main className="min-h-screen bg-[#0a0a0a] flex items-center justify-center px-5 sm:px-10 md:px-20 lg:px-28 pt-16">
       <motion.div
         initial={{ opacity: 0, y: 24 }}
         animate={{ opacity: 1, y: 0 }}
@@ -25,7 +25,7 @@ export default function Contact() {
         <div className="flex flex-col gap-4 items-center">
           <a
             href="mailto:jenilshingala2002@gmail.com"
-            className="inline-flex items-center gap-3 px-8 py-4 rounded-full text-base font-semibold tracking-wider transition-all duration-200 w-fit"
+            className="inline-flex items-center gap-3 px-5 sm:px-8 py-3 sm:py-4 rounded-full text-sm sm:text-base font-semibold tracking-wider transition-all duration-200 w-fit max-w-full"
             style={{ background: "rgb(57,255,20)", color: "#0a0a0a" }}
             onMouseOver={e => {
               e.currentTarget.style.background = "rgb(40,200,10)"

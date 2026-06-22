@@ -69,12 +69,12 @@ function Beat({ beat, i, total, prog }: {
 
   if (beat.big) {
     return (
-      <motion.div style={{ opacity, y }} className="absolute inset-0 flex items-center px-12 md:px-20 lg:px-28">
+      <motion.div style={{ opacity, y }} className="absolute inset-0 flex items-center px-5 sm:px-10 md:px-20 lg:px-28">
         <div className="max-w-2xl">
           <p className="text-xs font-mono tracking-[0.4em] uppercase mb-6" style={{ color: "rgba(57,255,20,0.4)" }}>
             {beat.num} / {beat.tag}
           </p>
-          <h2 className="text-5xl md:text-7xl lg:text-8xl font-bold leading-none tracking-tight mb-8"
+          <h2 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold leading-none tracking-tight mb-8"
             style={{ color: "rgb(57,255,20)", textShadow: "0 0 60px rgba(57,255,20,0.25)" }}>
             {beat.title}
           </h2>
@@ -91,12 +91,12 @@ function Beat({ beat, i, total, prog }: {
   }
 
   return (
-    <motion.div style={{ opacity, y }} className="absolute inset-0 flex items-center px-12 md:px-20 lg:px-28">
+    <motion.div style={{ opacity, y }} className="absolute inset-0 flex items-center px-5 sm:px-10 md:px-20 lg:px-28">
       <div className="max-w-lg">
         <p className="text-xs font-mono tracking-[0.3em] uppercase mb-5" style={{ color: "rgba(57,255,20,0.5)" }}>
           {beat.num} / {beat.tag}
         </p>
-        <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold leading-tight text-zinc-50 mb-6 tracking-tight">
+        <h2 className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold leading-tight text-zinc-50 mb-6 tracking-tight">
           {beat.title}
         </h2>
         <p className="text-zinc-400 text-lg leading-relaxed">{beat.sub}</p>
@@ -215,11 +215,11 @@ export default function Home() {
         <Spotlight size={500} springOptions={{ bounce: 0, damping: 30 }} />
 
         <motion.div style={{ opacity: heroOpacity, y: heroY }}
-          className="w-full md:w-1/2 flex flex-col justify-center px-12 md:px-20 lg:px-28 gap-5 relative z-10 pointer-events-auto">
+          className="w-full md:w-1/2 flex flex-col justify-center px-5 sm:px-10 md:px-20 lg:px-28 gap-5 relative z-10 pointer-events-auto">
 
           <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
             <p className="text-base md:text-lg uppercase tracking-[0.2em] text-zinc-400 mb-5 font-mono font-bold">AI / GPU Engineer</p>
-            <h1 className="text-6xl md:text-7xl lg:text-8xl font-semibold tracking-tight leading-[1.05] select-none">
+            <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-semibold tracking-tight leading-[1.05] select-none">
               <InteractiveName name="Jenil" /><br />
               <InteractiveName name="Shingala" color="rgb(57,255,20)" hoverColor="rgb(180,255,150)" />
             </h1>
@@ -341,7 +341,7 @@ export default function Home() {
       <StorySection />
 
       {/* ── About Me ── */}
-      <section id="about" className="relative bg-[#0a0a0a] px-12 md:px-20 lg:px-28 py-24 border-t"
+      <section id="about" className="relative bg-[#0a0a0a] px-5 sm:px-10 md:px-20 lg:px-28 py-24 border-t"
         style={{ borderColor: "rgba(57,255,20,0.1)", zIndex: 10 }}>
         <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }} transition={{ duration: 0.6 }} className="max-w-4xl mx-auto">

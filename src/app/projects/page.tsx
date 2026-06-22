@@ -152,24 +152,25 @@ const projects = [
 
 export default function Projects() {
   return (
-    <main className="min-h-screen bg-[#0a0a0a] px-6 md:px-20 lg:px-28 pt-28 pb-24">
+    <main className="min-h-screen bg-[#0a0a0a] px-5 sm:px-10 md:px-20 lg:px-28 pt-28 pb-24">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
         className="mb-16 text-center"
       >
-        <h1 className="text-5xl md:text-6xl font-bold tracking-widest uppercase"
+        <h1 className="text-3xl sm:text-4xl md:text-5xl md:text-6xl font-bold tracking-widest uppercase"
           style={{ color: "rgb(57,255,20)" }}>
           Projects
         </h1>
       </motion.div>
 
-      {/* Timeline */}
       <div className="relative max-w-5xl mx-auto">
-        {/* Center vertical line */}
-        <div className="absolute left-1/2 -translate-x-px top-0 bottom-0 w-px"
-          style={{ background: "linear-gradient(to bottom, transparent, rgb(57,255,20), transparent)" }} />
+        {/* Vertical line — left on mobile, center on desktop */}
+        <div
+          className="absolute top-0 bottom-0 w-px left-3 md:left-1/2 -translate-x-px"
+          style={{ background: "linear-gradient(to bottom, transparent, rgb(57,255,20), transparent)" }}
+        />
 
         <div className="flex flex-col">
           {projects.map((project, i) => {
@@ -177,47 +178,44 @@ export default function Projects() {
             return (
               <motion.div
                 key={project.title}
-                initial={{ opacity: 0, x: isLeft ? -40 : 40 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: i * 0.07, duration: 0.45 }}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.05, duration: 0.4 }}
                 className="relative mb-6"
               >
-                {/* Card row */}
-                <div className="flex items-start">
-                  {/* Left side */}
+                {/* Dot — left on mobile, center on desktop */}
+                <div
+                  className="absolute left-3 md:left-1/2 top-5 -translate-x-1/2 z-10 w-3.5 h-3.5 rounded-full shrink-0"
+                  style={{ background: "rgb(57,255,20)", boxShadow: "0 0 10px rgb(57,255,20), 0 0 20px rgba(57,255,20,0.5)" }}
+                />
+
+                {/* Mobile: single full-width column */}
+                <div className="md:hidden pl-10 flex flex-col gap-2">
+                  <div className="rounded-xl p-5 border"
+                    style={{ background: "rgba(0,20,0,0.6)", borderColor: "rgba(57,255,20,0.25)", boxShadow: "0 0 20px rgba(57,255,20,0.05)" }}>
+                    <CardContent project={project} align="left" />
+                  </div>
+                  <GitHubBar project={project} />
+                </div>
+
+                {/* Desktop: alternating two-column */}
+                <div className="hidden md:flex items-start">
                   <div className="w-1/2 pr-12 flex justify-end">
                     {isLeft && (
                       <div className="w-full max-w-md flex flex-col gap-2">
-                        <div className="rounded-xl p-5 border transition-all duration-300"
-                          style={{
-                            background: "rgba(0,20,0,0.6)",
-                            borderColor: "rgba(57,255,20,0.25)",
-                            boxShadow: "0 0 20px rgba(57,255,20,0.05)"
-                          }}>
+                        <div className="rounded-xl p-5 border"
+                          style={{ background: "rgba(0,20,0,0.6)", borderColor: "rgba(57,255,20,0.25)", boxShadow: "0 0 20px rgba(57,255,20,0.05)" }}>
                           <CardContent project={project} align="right" />
                         </div>
                         <GitHubBar project={project} />
                       </div>
                     )}
                   </div>
-
-                  {/* Center dot */}
-                  <div className="absolute left-1/2 top-5 -translate-x-1/2 z-10 w-4 h-4 rounded-full shrink-0"
-                    style={{
-                      background: "rgb(57,255,20)",
-                      boxShadow: "0 0 10px rgb(57,255,20), 0 0 20px rgba(57,255,20,0.5)"
-                    }} />
-
-                  {/* Right side */}
                   <div className="w-1/2 pl-12 flex justify-start">
                     {!isLeft && (
                       <div className="w-full max-w-md flex flex-col gap-2">
-                        <div className="rounded-xl p-5 border transition-all duration-300"
-                          style={{
-                            background: "rgba(0,20,0,0.6)",
-                            borderColor: "rgba(57,255,20,0.25)",
-                            boxShadow: "0 0 20px rgba(57,255,20,0.05)"
-                          }}>
+                        <div className="rounded-xl p-5 border"
+                          style={{ background: "rgba(0,20,0,0.6)", borderColor: "rgba(57,255,20,0.25)", boxShadow: "0 0 20px rgba(57,255,20,0.05)" }}>
                           <CardContent project={project} align="left" />
                         </div>
                         <GitHubBar project={project} />
@@ -237,15 +235,15 @@ export default function Projects() {
 function CardContent({ project, align }: { project: typeof projects[0]; align: "left" | "right" }) {
   return (
     <>
-      <h2 className="font-bold text-lg leading-snug mb-1 tracking-wide"
+      <h2 className="font-bold text-base sm:text-lg leading-snug mb-1 tracking-wide"
         style={{ color: "rgb(57,255,20)" }}>
         {project.title}
       </h2>
-      <p className="text-zinc-500 text-sm font-mono mb-3 tracking-widest uppercase">{project.period}</p>
+      <p className="text-zinc-500 text-xs sm:text-sm font-mono mb-3 tracking-widest uppercase">{project.period}</p>
 
       <ul className="flex flex-col gap-2 mb-4">
         {project.bullets.map((b, j) => (
-          <li key={j} className={`text-zinc-300 text-base leading-relaxed ${align === "right" ? "text-right" : ""}`}>
+          <li key={j} className={`text-zinc-300 text-sm leading-relaxed ${align === "right" ? "text-right" : ""}`}>
             {b}
           </li>
         ))}
@@ -255,16 +253,11 @@ function CardContent({ project, align }: { project: typeof projects[0]; align: "
         {project.tags.map((tag) => (
           <span key={tag}
             className="px-2.5 py-0.5 rounded-full text-xs font-mono tracking-wider uppercase"
-            style={{
-              border: "1px solid rgba(57,255,20,0.3)",
-              color: "rgb(57,255,20)",
-              background: "rgba(57,255,20,0.05)"
-            }}>
+            style={{ border: "1px solid rgba(57,255,20,0.3)", color: "rgb(57,255,20)", background: "rgba(57,255,20,0.05)" }}>
             {tag}
           </span>
         ))}
       </div>
-
     </>
   )
 }
@@ -275,33 +268,25 @@ function GitHubBar({ project }: { project: typeof projects[0] }) {
     <div className="flex gap-2">
       {project.github && (
         <a href={project.github} target="_blank" rel="noopener noreferrer"
-          className="flex-1 flex items-center justify-between px-5 py-2.5 rounded-lg transition-all duration-300"
-          style={{
-            border: "1px solid rgba(57,255,20,0.25)",
-            background: "rgba(57,255,20,0.03)",
-          }}
+          className="flex-1 flex items-center justify-between px-4 py-2.5 rounded-lg transition-all duration-300"
+          style={{ border: "1px solid rgba(57,255,20,0.25)", background: "rgba(57,255,20,0.03)" }}
           onMouseOver={e => {
             e.currentTarget.style.background = "rgba(57,255,20,0.09)"
             e.currentTarget.style.borderColor = "rgba(57,255,20,0.65)"
-            e.currentTarget.style.boxShadow = "0 0 20px rgba(57,255,20,0.12), inset 0 0 20px rgba(57,255,20,0.04)"
+            e.currentTarget.style.boxShadow = "0 0 20px rgba(57,255,20,0.12)"
           }}
           onMouseOut={e => {
             e.currentTarget.style.background = "rgba(57,255,20,0.03)"
             e.currentTarget.style.borderColor = "rgba(57,255,20,0.25)"
             e.currentTarget.style.boxShadow = "none"
           }}>
-          <div className="flex items-center gap-2.5">
-            <Globe size={14} style={{ color: "rgb(57,255,20)" }} />
+          <div className="flex items-center gap-2">
+            <Globe size={13} style={{ color: "rgb(57,255,20)" }} />
             <span className="text-xs font-bold tracking-widest uppercase" style={{ color: "rgb(57,255,20)" }}>
-              View on GitHub
+              GitHub
             </span>
           </div>
-          <div className="flex items-center gap-1.5">
-            <span className="text-[11px] font-mono hidden sm:block" style={{ color: "rgba(57,255,20,0.4)" }}>
-              {project.github.replace("https://github.com/", "")}
-            </span>
-            <ExternalLink size={12} style={{ color: "rgba(57,255,20,0.55)" }} />
-          </div>
+          <ExternalLink size={12} style={{ color: "rgba(57,255,20,0.55)" }} />
         </a>
       )}
       {project.live && (

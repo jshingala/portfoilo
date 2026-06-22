@@ -59,22 +59,25 @@ const experience = [
 
 export default function Experience() {
   return (
-    <main className="min-h-screen bg-[#0a0a0a] px-6 md:px-20 lg:px-28 pt-28 pb-24">
+    <main className="min-h-screen bg-[#0a0a0a] px-5 sm:px-10 md:px-20 lg:px-28 pt-28 pb-24">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
         className="mb-16 text-center"
       >
-        <h1 className="text-5xl md:text-6xl font-bold tracking-widest uppercase"
+        <h1 className="text-3xl sm:text-4xl md:text-5xl md:text-6xl font-bold tracking-widest uppercase"
           style={{ color: "rgb(57,255,20)" }}>
           Technical Experience
         </h1>
       </motion.div>
 
       <div className="relative max-w-5xl mx-auto">
-        <div className="absolute left-1/2 -translate-x-px top-0 bottom-0 w-px"
-          style={{ background: "linear-gradient(to bottom, transparent, rgb(57,255,20), transparent)" }} />
+        {/* Vertical line — left on mobile, center on desktop */}
+        <div
+          className="absolute top-0 bottom-0 w-px left-3 md:left-1/2 -translate-x-px"
+          style={{ background: "linear-gradient(to bottom, transparent, rgb(57,255,20), transparent)" }}
+        />
 
         <div className="flex flex-col">
           {experience.map((job, i) => {
@@ -82,30 +85,43 @@ export default function Experience() {
             return (
               <motion.div
                 key={job.company}
-                initial={{ opacity: 0, x: isLeft ? -40 : 40 }}
-                animate={{ opacity: 1, x: 0 }}
+                initial={{ opacity: 0, y: 24 }}
+                animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: i * 0.12, duration: 0.45 }}
-                className="relative flex items-start mb-14"
+                className="relative mb-10"
               >
-                <div className="w-1/2 pr-12 flex justify-end">
-                  {isLeft && (
-                    <div className="w-full max-w-md rounded-xl p-6 border transition-all duration-300"
-                      style={{ background: "rgba(0,20,0,0.6)", borderColor: "rgba(57,255,20,0.25)", boxShadow: "0 0 20px rgba(57,255,20,0.05)" }}>
-                      <ExperienceCard job={job} align="right" />
-                    </div>
-                  )}
+                {/* Dot — left on mobile, center on desktop */}
+                <div
+                  className="absolute left-3 md:left-1/2 top-6 -translate-x-1/2 z-10 w-3.5 h-3.5 rounded-full shrink-0"
+                  style={{ background: "rgb(57,255,20)", boxShadow: "0 0 10px rgb(57,255,20), 0 0 20px rgba(57,255,20,0.5)" }}
+                />
+
+                {/* Mobile: single full-width column */}
+                <div className="md:hidden pl-10">
+                  <div className="rounded-xl p-5 border"
+                    style={{ background: "rgba(0,20,0,0.6)", borderColor: "rgba(57,255,20,0.25)", boxShadow: "0 0 20px rgba(57,255,20,0.05)" }}>
+                    <ExperienceCard job={job} align="left" />
+                  </div>
                 </div>
 
-                <div className="absolute left-1/2 top-6 -translate-x-1/2 z-10 w-4 h-4 rounded-full shrink-0"
-                  style={{ background: "rgb(57,255,20)", boxShadow: "0 0 10px rgb(57,255,20), 0 0 20px rgba(57,255,20,0.5)" }} />
-
-                <div className="w-1/2 pl-12 flex justify-start">
-                  {!isLeft && (
-                    <div className="w-full max-w-md rounded-xl p-6 border transition-all duration-300"
-                      style={{ background: "rgba(0,20,0,0.6)", borderColor: "rgba(57,255,20,0.25)", boxShadow: "0 0 20px rgba(57,255,20,0.05)" }}>
-                      <ExperienceCard job={job} align="left" />
-                    </div>
-                  )}
+                {/* Desktop: alternating two-column */}
+                <div className="hidden md:flex items-start">
+                  <div className="w-1/2 pr-12 flex justify-end">
+                    {isLeft && (
+                      <div className="w-full max-w-md rounded-xl p-6 border"
+                        style={{ background: "rgba(0,20,0,0.6)", borderColor: "rgba(57,255,20,0.25)", boxShadow: "0 0 20px rgba(57,255,20,0.05)" }}>
+                        <ExperienceCard job={job} align="right" />
+                      </div>
+                    )}
+                  </div>
+                  <div className="w-1/2 pl-12 flex justify-start">
+                    {!isLeft && (
+                      <div className="w-full max-w-md rounded-xl p-6 border"
+                        style={{ background: "rgba(0,20,0,0.6)", borderColor: "rgba(57,255,20,0.25)", boxShadow: "0 0 20px rgba(57,255,20,0.05)" }}>
+                        <ExperienceCard job={job} align="left" />
+                      </div>
+                    )}
+                  </div>
                 </div>
               </motion.div>
             )
@@ -120,16 +136,16 @@ function ExperienceCard({ job, align }: { job: typeof experience[0]; align: "lef
   const right = align === "right"
   return (
     <>
-      <h2 className={`font-bold text-xl tracking-wide mb-1 ${right ? "text-right" : ""}`}
+      <h2 className={`font-bold text-lg sm:text-xl tracking-wide mb-1 ${right ? "text-right" : ""}`}
         style={{ color: "rgb(57,255,20)" }}>
         {job.company}
       </h2>
 
-      <p className={`text-zinc-300 text-base font-semibold mb-1 ${right ? "text-right" : ""}`}>
+      <p className={`text-zinc-300 text-sm sm:text-base font-semibold mb-1 ${right ? "text-right" : ""}`}>
         {job.role}
       </p>
 
-      <div className={`flex items-center gap-1.5 mb-4 ${right ? "justify-end" : ""}`}>
+      <div className={`flex items-center gap-1.5 mb-4 flex-wrap ${right ? "justify-end" : ""}`}>
         <p className="text-zinc-500 text-xs font-mono tracking-widest uppercase">{job.period}</p>
         <span className="text-zinc-700 text-xs">·</span>
         <MapPin size={11} className="text-zinc-600" />
