@@ -1,3 +1,5 @@
+export const runtime = 'edge'
+
 import { NextRequest, NextResponse } from 'next/server'
 
 const SYSTEM_PROMPT = `You are a helpful assistant on Jenil Shingala's portfolio website. Answer questions about Jenil concisely and professionally. Keep responses under 120 words. Be friendly and enthusiastic about his work.
