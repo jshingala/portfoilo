@@ -1,15 +1,15 @@
 @import "tailwindcss";
 
 :root {
-  --background: #0a0a0a;
-  --foreground: #fafafa;
+  --background: #080808;
+  --foreground: #f5f5f5;
   --card: #111111;
-  --card-foreground: #fafafa;
+  --card-foreground: #f5f5f5;
   --muted: #1a1a1a;
-  --muted-foreground: #a1a1aa;
+  --muted-foreground: #71717a;
   --border: #27272a;
   --input: #27272a;
-  --ring: #ffffff;
+  --ring: rgba(57,255,20,0.5);
   --radius: 0.5rem;
 }
 
@@ -21,24 +21,46 @@
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
   --color-border: var(--border);
-  --font-sans: var(--font-expletus-sans), sans-serif;
-  --font-mono: var(--font-expletus-sans), sans-serif;
+  --font-sans: var(--font-space-grotesk), system-ui, sans-serif;
+  --font-mono: var(--font-space-mono), "JetBrains Mono", monospace;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-expletus-sans), sans-serif;
+  font-family: var(--font-sans);
 }
 
-/* ── Skip-to-content link (keyboard / screen-reader accessibility) ── */
+/* ── Grain overlay — makes it feel crafted, not generated ── */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n' x='0' y='0'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+  background-size: 180px 180px;
+  opacity: 0.032;
+}
+
+/* ── Skip link ── */
 .skip-link {
   position: fixed;
   top: -100px;
   left: 1rem;
-  z-index: 9999;
+  z-index: 99999;
   background: rgb(57,255,20);
-  color: #0a0a0a;
+  color: #080808;
   padding: 0.5rem 1.25rem;
   font-weight: 700;
   font-size: 0.875rem;
@@ -46,89 +68,72 @@ body {
   text-decoration: none;
   transition: top 0.2s;
 }
-.skip-link:focus {
-  top: 0;
-}
+.skip-link:focus { top: 0; }
 
-/* ── Focus rings for keyboard navigation (WCAG AA) ── */
+/* ── Focus rings ── */
 :focus-visible {
-  outline: 2px solid rgb(57,255,20);
+  outline: 2px solid rgba(57,255,20,0.8);
   outline-offset: 3px;
   border-radius: 4px;
 }
 
-@keyframes spotlight {
-  0% {
-    opacity: 0;
-    transform: translate(-72%, -62%) scale(0.5);
-  }
-  100% {
-    opacity: 1;
-    transform: translate(-50%, -40%) scale(1);
-  }
-}
-
-.animate-spotlight {
-  animation: spotlight 2s ease 0.75s 1 forwards;
-}
-
+/* ── Loader spinner ── */
 .loader {
-  width: 24px;
-  height: 24px;
-  border: 2px solid #ffffff22;
-  border-top-color: #ffffff88;
+  width: 22px;
+  height: 22px;
+  border: 1.5px solid rgba(255,255,255,0.1);
+  border-top-color: rgba(57,255,20,0.6);
   border-radius: 50%;
-  animation: spin 0.8s linear infinite;
+  animation: spin 0.75s linear infinite;
 }
 
 @keyframes spin {
   to { transform: rotate(360deg); }
 }
 
-/* Runs on compositor thread — no JS involvement */
-@keyframes neon-color-cycle {
-  0%, 100% { color: rgb(57,255,20); }
-  25%       { color: rgb(120,255,80); }
-  50%       { color: rgb(200,255,180); }
-  75%       { color: rgb(120,255,80); }
-}
-
+/* ── Scroll-bounce ── */
 @keyframes scroll-bounce {
   0%, 100% { transform: translateY(0); }
-  50%       { transform: translateY(8px); }
+  50%       { transform: translateY(7px); }
 }
-
-.animate-neon-cycle {
-  animation: neon-color-cycle 4s ease-in-out infinite;
-}
-
 .animate-scroll-bounce {
   animation: scroll-bounce 2s ease-in-out infinite;
 }
 
-/* CSS hover — compositor thread instead of 13 Framer Motion spring instances */
-.interactive-char {
-  display: inline-block;
-  cursor: default;
-  color: var(--char-color);
-  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), color 0.2s ease;
+/* ── Spotlight ── */
+@keyframes spotlight {
+  0%   { opacity: 0; transform: translate(-72%, -62%) scale(0.5); }
+  100% { opacity: 1; transform: translate(-50%, -40%) scale(1); }
+}
+.animate-spotlight {
+  animation: spotlight 2s ease 0.75s 1 forwards;
 }
 
-.interactive-char:hover {
-  transform: translateY(-8px);
-  color: var(--char-hover-color);
+/* ── View Transitions ── */
+@view-transition {
+  navigation: auto;
+}
+::view-transition-old(root) {
+  animation: 220ms cubic-bezier(0.4, 0, 1, 1) both page-out;
+}
+::view-transition-new(root) {
+  animation: 380ms cubic-bezier(0.16, 1, 0.3, 1) both page-in;
+}
+@keyframes page-out {
+  from { opacity: 1; transform: translateY(0) scale(1);     filter: blur(0px); }
+  to   { opacity: 0; transform: translateY(-10px) scale(0.99); filter: blur(6px); }
+}
+@keyframes page-in {
+  from { opacity: 0; transform: translateY(12px) scale(0.99); filter: blur(6px); }
+  to   { opacity: 1; transform: translateY(0) scale(1);     filter: blur(0px); }
 }
 
-/* ── prefers-reduced-motion (WCAG 2.3 / skill rule) ── */
+/* ── prefers-reduced-motion ── */
 @media (prefers-reduced-motion: reduce) {
-  .animate-neon-cycle,
   .animate-scroll-bounce,
   .animate-spotlight,
   .loader {
     animation: none !important;
-  }
-  .interactive-char {
-    transition: none !important;
   }
   ::view-transition-group(*),
   ::view-transition-image-pair(*),
@@ -136,25 +141,4 @@ body {
   ::view-transition-new(*) {
     animation: none !important;
   }
-}
-
-/* ── Page-level View Transitions (Chrome 111+, Safari 18+, Edge) ── */
-@view-transition {
-  navigation: auto;
-}
-
-::view-transition-old(root) {
-  animation: 260ms cubic-bezier(0.4, 0, 1, 1) both page-out;
-}
-::view-transition-new(root) {
-  animation: 420ms cubic-bezier(0.16, 1, 0.3, 1) both page-in;
-}
-
-@keyframes page-out {
-  from { opacity: 1; transform: translateY(0) scale(1);    filter: blur(0px); }
-  to   { opacity: 0; transform: translateY(-14px) scale(0.98); filter: blur(8px); }
-}
-@keyframes page-in {
-  from { opacity: 0; transform: translateY(14px) scale(0.98); filter: blur(8px); }
-  to   { opacity: 1; transform: translateY(0) scale(1);    filter: blur(0px); }
 }

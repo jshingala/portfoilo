@@ -1,14 +1,22 @@
 import type { Metadata } from "next";
-import { Expletus_Sans } from "next/font/google";
+import { Space_Grotesk, Space_Mono } from "next/font/google";
 import { Navbar } from "@/components/ui/navbar";
 import { Chatbot } from "@/components/ui/chatbot";
 import { Providers } from "@/components/providers";
 import "./globals.css";
 
-const excletusSans = Expletus_Sans({
-  variable: "--font-expletus-sans",
+const spaceGrotesk = Space_Grotesk({
+  variable: "--font-space-grotesk",
   subsets: ["latin"],
-  weight: ["400", "600", "700"],
+  weight: ["300", "400", "500", "600", "700"],
+  display: "swap",
+});
+
+const spaceMono = Space_Mono({
+  variable: "--font-space-mono",
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -37,10 +45,9 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${excletusSans.variable} h-full antialiased`}
+      className={`${spaceGrotesk.variable} ${spaceMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col bg-[#0a0a0a] text-zinc-50">
-        {/* Skip to main content — visible on keyboard focus (WCAG 2.4.1) */}
+      <body className="min-h-full flex flex-col bg-[#080808] text-zinc-50">
         <a href="#main-content" className="skip-link">
           Skip to main content
         </a>
