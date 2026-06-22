@@ -132,7 +132,7 @@ export default function Home() {
             </a>
 
             <a
-              href="https://www.linkedin.com/in/jenilshingala-39685a219"
+              href="https://www.linkedin.com/in/jenil-shingala-39685a219/"
               target="_blank"
               rel="noopener noreferrer"
               className="flex items-center gap-3 text-zinc-400 text-sm hover:text-zinc-200 transition-colors duration-200 group w-fit"
@@ -299,7 +299,7 @@ export default function Home() {
               jenilshingala2002@gmail.com
             </a>
             <a
-              href="https://www.linkedin.com/in/jenilshingala-39685a219"
+              href="https://www.linkedin.com/in/jenil-shingala-39685a219/"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-zinc-700 text-zinc-300 text-sm font-medium hover:border-zinc-500 hover:text-zinc-100 transition-colors duration-200 w-fit"

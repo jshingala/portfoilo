@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
-import { Roboto_Flex } from "next/font/google";
+import { Expletus_Sans } from "next/font/google";
 import { Navbar } from "@/components/ui/navbar";
 import "./globals.css";
 
-const robotoFlex = Roboto_Flex({
-  variable: "--font-roboto-flex",
+const excletusSans = Expletus_Sans({
+  variable: "--font-expletus-sans",
   subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
 });
 
 export const metadata: Metadata = {
@@ -21,7 +22,7 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${robotoFlex.variable} h-full antialiased`}
+      className={`${excletusSans.variable} h-full antialiased`}
     >
       <body className="min-h-full flex flex-col bg-[#0a0a0a] text-zinc-50">
         <Navbar />

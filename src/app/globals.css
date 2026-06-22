@@ -1,5 +1,12 @@
 @import "tailwindcss";
 
+@font-face {
+  font-family: 'Direction';
+  src: url('/fonts/Direction.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 :root {
   --background: #0a0a0a;
   --foreground: #fafafa;
@@ -21,14 +28,14 @@
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
   --color-border: var(--border);
-  --font-sans: var(--font-roboto-flex);
-  --font-mono: var(--font-roboto-flex);
+  --font-sans: var(--font-expletus-sans), sans-serif;
+  --font-mono: var(--font-expletus-sans), sans-serif;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-roboto-flex), sans-serif;
+  font-family: var(--font-expletus-sans), sans-serif;
 }
 
 @keyframes spotlight {
