@@ -109,7 +109,7 @@ function StorySection() {
 
   return (
     <div ref={ref} style={{ height: `${beats.length * 100}vh`, position: "relative", zIndex: 10 }}>
-      <div className="sticky top-0 h-screen overflow-hidden">
+      <div className="sticky top-0 h-screen overflow-hidden pointer-events-none">
         {/* Vertical progress line */}
         <div className="absolute right-10 top-[20%] bottom-[20%] w-px hidden md:block"
           style={{ background: "rgba(57,255,20,0.12)" }}>
@@ -170,12 +170,12 @@ export default function Home() {
       </div>
 
       {/* ── Hero ── */}
-      <section ref={heroRef} id="home" className="relative h-screen flex items-center overflow-hidden pt-16"
+      <section ref={heroRef} id="home" className="relative h-screen flex items-center overflow-hidden pt-16 pointer-events-none"
         style={{ zIndex: 10 }}>
         <Spotlight size={500} springOptions={{ bounce: 0, damping: 30 }} />
 
         <motion.div style={{ opacity: heroOpacity, y: heroY }}
-          className="flex-1 flex flex-col justify-center px-12 md:px-20 lg:px-28 gap-5 relative z-10">
+          className="flex-1 flex flex-col justify-center px-12 md:px-20 lg:px-28 gap-5 relative z-10 pointer-events-auto">
 
           <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
             <p className="text-base md:text-lg uppercase tracking-[0.2em] text-zinc-400 mb-5 font-mono font-bold">AI / GPU Engineer</p>
