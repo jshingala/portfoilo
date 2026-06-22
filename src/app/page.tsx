@@ -175,7 +175,7 @@ export default function Home() {
         <Spotlight size={500} springOptions={{ bounce: 0, damping: 30 }} />
 
         <motion.div style={{ opacity: heroOpacity, y: heroY }}
-          className="flex-1 flex flex-col justify-center px-12 md:px-20 lg:px-28 gap-5 relative z-10 pointer-events-auto">
+          className="w-full md:w-1/2 flex flex-col justify-center px-12 md:px-20 lg:px-28 gap-5 relative z-10 pointer-events-auto">
 
           <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
             <p className="text-base md:text-lg uppercase tracking-[0.2em] text-zinc-400 mb-5 font-mono font-bold">AI / GPU Engineer</p>
