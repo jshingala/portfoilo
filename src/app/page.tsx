@@ -1,6 +1,6 @@
 'use client'
 
-import { useRef, useEffect } from "react"
+import { useRef, useEffect, type CSSProperties } from "react"
 import { SplineScene } from "@/components/ui/splite"
 import { Spotlight } from "@/components/ui/spotlight"
 import { motion, useScroll, useTransform } from "framer-motion"
@@ -13,10 +13,13 @@ function InteractiveName({ name, color = "rgb(161,161,170)", hoverColor = "rgb(2
   return (
     <span className="inline-flex">
       {name.split("").map((char, i) => (
-        <motion.span key={i} className="inline-block cursor-default" style={{ color }}
-          whileHover={{ y: -8, color: hoverColor, transition: { type: "spring", stiffness: 400, damping: 10 } }}>
+        <span
+          key={i}
+          className="interactive-char"
+          style={{ '--char-color': color, '--char-hover-color': hoverColor } as CSSProperties}
+        >
           {char === " " ? " " : char}
-        </motion.span>
+        </span>
       ))}
     </span>
   )
@@ -156,43 +159,48 @@ export default function Home() {
   const heroRef = useRef<HTMLElement>(null)
   const { scrollYProgress: heroP } = useScroll({ target: heroRef, offset: ["start start", "end start"] })
 
-  // Map full-screen cursor onto Spline canvas so robot tracks from anywhere on the page
+  // Map full-screen cursor onto Spline canvas so robot tracks from anywhere on the page.
+  // Throttled to one dispatch per animation frame to prevent Spline runtime stack overflow.
   useEffect(() => {
     let lastX = window.innerWidth * 0.75
     let lastY = window.innerHeight * 0.5
+    let rafId: number | null = null
 
-    const dispatchToCanvas = (clientX: number, clientY: number) => {
+    const flushToCanvas = () => {
+      rafId = null
       const canvas = document.querySelector('canvas') as HTMLCanvasElement | null
       if (!canvas) return
-      canvas.dispatchEvent(new PointerEvent('pointermove', { bubbles: false, clientX, clientY, pointerType: 'mouse', pointerId: 1 }))
-      canvas.dispatchEvent(new MouseEvent('mousemove', { bubbles: false, clientX, clientY }))
+      canvas.dispatchEvent(new PointerEvent('pointermove', { bubbles: false, clientX: lastX, clientY: lastY, pointerType: 'mouse', pointerId: 1 }))
+      canvas.dispatchEvent(new MouseEvent('mousemove', { bubbles: false, clientX: lastX, clientY: lastY }))
     }
 
-    // mousemove tracks actual cursor (not scroll gestures)
-    const onMouseMove = (e: MouseEvent) => {
-      lastX = e.clientX
-      lastY = e.clientY
-      dispatchToCanvas(lastX, lastY)
+    const schedule = (x: number, y: number) => {
+      lastX = x
+      lastY = y
+      if (rafId === null) rafId = requestAnimationFrame(flushToCanvas)
     }
 
-    // On scroll, re-fire last known cursor so robot holds its look direction
-    const onScroll = () => dispatchToCanvas(lastX, lastY)
+    const onMouseMove = (e: MouseEvent) => schedule(e.clientX, e.clientY)
+    const onScroll = () => schedule(lastX, lastY)
 
     window.addEventListener('mousemove', onMouseMove, true)
     window.addEventListener('scroll', onScroll, true)
     return () => {
       window.removeEventListener('mousemove', onMouseMove, true)
       window.removeEventListener('scroll', onScroll, true)
+      if (rafId !== null) cancelAnimationFrame(rafId)
     }
   }, [])
+
   const heroOpacity = useTransform(heroP, [0, 0.6], [1, 0])
   const heroY = useTransform(heroP, [0, 0.6], [0, -40])
 
   return (
     <div className="bg-[#0a0a0a]">
 
-      {/* Fixed Spline robot — full-screen background, shifted right */}
-      <div className="fixed inset-0 w-full h-screen hidden md:block" style={{ zIndex: 1, transform: 'translateX(20%)' }}>
+      {/* Fixed Spline robot — pointer-events:none so browser skips hit-testing on WebGL canvas */}
+      <div className="fixed inset-0 w-full h-screen hidden md:block pointer-events-none"
+        style={{ zIndex: 1, transform: 'translateX(20%)' }}>
         <SplineScene
           scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
           className="w-full h-full"
@@ -215,21 +223,10 @@ export default function Home() {
               <InteractiveName name="Jenil" /><br />
               <InteractiveName name="Shingala" color="rgb(57,255,20)" hoverColor="rgb(180,255,150)" />
             </h1>
-            <motion.p
-              className="text-2xl md:text-3xl font-semibold tracking-widest mt-3"
-              animate={{
-                color: [
-                  "rgb(57,255,20)",
-                  "rgb(120,255,80)",
-                  "rgb(200,255,180)",
-                  "rgb(120,255,80)",
-                  "rgb(57,255,20)",
-                ],
-              }}
-              transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-            >
+            {/* CSS animation — runs on compositor thread, zero JS cost */}
+            <p className="text-2xl md:text-3xl font-semibold tracking-widest mt-3 animate-neon-cycle">
               Portfolio
-            </motion.p>
+            </p>
           </motion.div>
 
           <motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.15 }}
@@ -328,13 +325,13 @@ export default function Home() {
             </a>
           </motion.div>
 
-          {/* Scroll hint */}
+          {/* Scroll hint — inner bounce is a CSS animation (compositor thread) */}
           <motion.div
             initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1, duration: 0.8 }}
             className="mt-2 flex flex-col items-start gap-1">
-            <motion.div animate={{ y: [0, 8, 0] }} transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}>
+            <div className="animate-scroll-bounce">
               <div className="w-px h-10" style={{ background: "linear-gradient(to bottom, rgba(57,255,20,0.7), transparent)" }} />
-            </motion.div>
+            </div>
             <p className="text-[10px] font-mono tracking-[0.2em] uppercase" style={{ color: "rgba(57,255,20,0.35)" }}>Scroll</p>
           </motion.div>
         </motion.div>

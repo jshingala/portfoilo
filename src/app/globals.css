@@ -65,3 +65,37 @@ body {
 @keyframes spin {
   to { transform: rotate(360deg); }
 }
+
+/* Runs on compositor thread — no JS involvement */
+@keyframes neon-color-cycle {
+  0%, 100% { color: rgb(57,255,20); }
+  25%       { color: rgb(120,255,80); }
+  50%       { color: rgb(200,255,180); }
+  75%       { color: rgb(120,255,80); }
+}
+
+@keyframes scroll-bounce {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(8px); }
+}
+
+.animate-neon-cycle {
+  animation: neon-color-cycle 4s ease-in-out infinite;
+}
+
+.animate-scroll-bounce {
+  animation: scroll-bounce 2s ease-in-out infinite;
+}
+
+/* CSS hover — compositor thread instead of 13 Framer Motion spring instances */
+.interactive-char {
+  display: inline-block;
+  cursor: default;
+  color: var(--char-color);
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), color 0.2s ease;
+}
+
+.interactive-char:hover {
+  transform: translateY(-8px);
+  color: var(--char-hover-color);
+}
