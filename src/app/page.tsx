@@ -144,23 +144,6 @@ export default function Home() {
   return (
     <div style={{ background: "#080808" }}>
 
-      {/* Video background — darkened + desaturated to match site palette */}
-      <div className="fixed inset-0 pointer-events-none" style={{ zIndex: 0 }}>
-        <video
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="w-full h-full object-cover"
-          style={{ opacity: 0.55 }}
-        >
-          <source src="/bg.mp4" type="video/mp4" />
-        </video>
-        {/* Vignette overlay — keeps edges dark */}
-        <div className="absolute inset-0"
-          style={{ background: "radial-gradient(ellipse at center, transparent 30%, rgba(8,8,8,0.75) 100%)" }} />
-      </div>
-
       {/* Fixed robot — shifted right so it fills the right half */}
       <div className="fixed inset-0 pointer-events-none" style={{ zIndex: 1 }}>
         <div className="hidden md:block absolute inset-0" style={{ transform: "translateX(16%)" }}>
@@ -176,15 +159,24 @@ export default function Home() {
         className="relative h-screen flex items-center overflow-hidden"
         style={{ zIndex: 10 }}>
 
-        {/* Left-to-right gradient masks content side */}
+        {/* Video — must be inside the section so the hero stacking context renders it */}
+        <video
+          autoPlay loop muted playsInline
+          className="absolute inset-0 w-full h-full object-cover pointer-events-none"
+          style={{ zIndex: 0, opacity: 0.6 }}
+        >
+          <source src="/bg.mp4" type="video/mp4" />
+        </video>
+
+        {/* Gradient — readable on left, fades out right so robot shows through */}
         <div className="absolute inset-0 pointer-events-none"
-          style={{ background: "linear-gradient(100deg, #080808 0%, rgba(8,8,8,0.96) 38%, rgba(8,8,8,0.5) 60%, rgba(8,8,8,0.05) 78%, transparent 88%)" }} />
+          style={{ zIndex: 1, background: "linear-gradient(100deg, rgba(8,8,8,0.88) 0%, rgba(8,8,8,0.72) 40%, rgba(8,8,8,0.28) 62%, rgba(8,8,8,0.04) 80%, transparent 90%)" }} />
 
         <Spotlight size={520} springOptions={{ bounce: 0, damping: 28 }} />
 
         <motion.div
-          style={{ opacity: heroOpacity, y: heroY }}
-          className="relative z-10 flex flex-col w-full md:w-[54%] px-6 sm:px-10 md:px-16 lg:px-24 gap-7 pt-16 pointer-events-auto"
+          style={{ opacity: heroOpacity, y: heroY, zIndex: 2 }}
+          className="relative flex flex-col w-full md:w-[54%] px-6 sm:px-10 md:px-16 lg:px-24 gap-7 pt-16 pointer-events-auto"
         >
           {/* Role label */}
           <motion.div
