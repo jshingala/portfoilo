@@ -5,6 +5,7 @@ import { SplineScene } from "@/components/ui/splite"
 import { Spotlight } from "@/components/ui/spotlight"
 import { motion, useScroll, useTransform } from "framer-motion"
 import { MapPin, Award, ExternalLink, ArrowUpRight } from "lucide-react"
+import { useScrollRef } from "@/components/scroll-container"
 
 const EXPO = [0.16, 1, 0.3, 1] as const
 
@@ -73,9 +74,9 @@ function Beat({ b, i, total, prog }: {
   )
 }
 
-function StorySection() {
+function StorySection({ scrollRef }: { scrollRef: React.RefObject<HTMLDivElement | null> }) {
   const ref = useRef<HTMLDivElement>(null)
-  const { scrollYProgress } = useScroll({ target: ref, offset: ["start start", "end end"] })
+  const { scrollYProgress } = useScroll({ target: ref, container: scrollRef, offset: ["start start", "end end"] })
   const lineH = useTransform(scrollYProgress, [0, 1], ["0%", "100%"])
   return (
     <div ref={ref} style={{ height: `${beats.length * 100}vh`, position: "relative", zIndex: 10 }}>
@@ -115,8 +116,9 @@ const honors = [
 
 /* ── Page ─────────────────────────────────────────────────── */
 export default function Home() {
+  const scrollRef = useScrollRef()
   const heroRef = useRef<HTMLElement>(null)
-  const { scrollYProgress: heroP } = useScroll({ target: heroRef, offset: ["start start", "end start"] })
+  const { scrollYProgress: heroP } = useScroll({ target: heroRef, container: scrollRef, offset: ["start start", "end start"] })
   const heroOpacity = useTransform(heroP, [0, 0.6], [1, 0])
   const heroY       = useTransform(heroP, [0, 0.6], [0, -48])
 
@@ -296,7 +298,7 @@ export default function Home() {
       </section>
 
       {/* ── Story ── */}
-      <StorySection />
+      <StorySection scrollRef={scrollRef} />
 
       {/* ── About ── */}
       <section id="about"

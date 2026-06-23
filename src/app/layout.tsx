@@ -3,6 +3,7 @@ import { Space_Grotesk, Space_Mono } from "next/font/google";
 import { Navbar } from "@/components/ui/navbar";
 import { Chatbot } from "@/components/ui/chatbot";
 import { Providers } from "@/components/providers";
+import { ScrollContainer } from "@/components/scroll-container";
 import "./globals.css";
 
 const spaceGrotesk = Space_Grotesk({
@@ -50,7 +51,7 @@ export default function RootLayout({
       <head>
         <link rel="preconnect" href="https://prod.spline.design" crossOrigin="anonymous" />
       </head>
-      <body className="min-h-full flex flex-col bg-[#080808] text-zinc-50">
+      <body className="h-full overflow-hidden bg-[#080808] text-zinc-50">
         <a href="#main-content" className="skip-link">
           Skip to main content
         </a>
@@ -78,15 +79,17 @@ export default function RootLayout({
           <div style={{ position: "absolute", inset: 0, background: "rgba(8,8,8,0.58)" }} />
         </div>
 
-        {/* All content sits above the video at z-index 1 */}
+        {/* ScrollContainer keeps window.scrollY = 0, preventing Spline's scroll animation */}
         <Providers>
-          <div style={{ position: "relative", zIndex: 1, display: "flex", flexDirection: "column", minHeight: "100vh" }}>
-            <Navbar />
-            <main id="main-content" style={{ flex: 1 }}>
-              {children}
-            </main>
-            <Chatbot />
-          </div>
+          <ScrollContainer>
+            <div style={{ position: "relative", zIndex: 1 }}>
+              <Navbar />
+              <main id="main-content">
+                {children}
+              </main>
+              <Chatbot />
+            </div>
+          </ScrollContainer>
         </Providers>
       </body>
     </html>
