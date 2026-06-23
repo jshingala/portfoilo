@@ -10,10 +10,10 @@ const neon = 'rgb(57,255,20)'
 const neonDim = 'rgba(57,255,20,0.15)'
 
 const SUGGESTIONS = [
-  "What are Jenil's skills?",
-  "Tell me about his experience",
-  "What projects has he built?",
-  "How can I contact Jenil?",
+  "Is Jenil open to full-time roles?",
+  "What are his strongest skills?",
+  "Walk me through his biggest project.",
+  "How do I schedule an interview?",
 ]
 
 export function Chatbot() {
@@ -21,7 +21,7 @@ export function Chatbot() {
   const [messages, setMessages] = useState<Message[]>([
     {
       role: 'assistant',
-      content: "Hi! I'm Jenil's AI assistant. Ask me anything about his skills, experience, or projects.",
+      content: "Hi, I'm Seshat — Jenil Shingala's career agent. I'm here to help you evaluate him for your team. What would you like to know?",
     },
   ])
   const [input, setInput] = useState('')
@@ -115,8 +115,8 @@ export function Chatbot() {
                 <Bot size={16} style={{ color: neon }} />
               </div>
               <div>
-                <p className="text-sm font-bold tracking-wider uppercase" style={{ color: neon }}>Jenil&apos;s Assistant</p>
-                <p className="text-[10px] font-mono" style={{ color: 'rgba(57,255,20,0.45)' }}>Powered by Mistral · Hugging Face</p>
+                <p className="text-sm font-bold tracking-wider uppercase" style={{ color: neon }}>Seshat</p>
+                <p className="text-[10px] font-mono" style={{ color: 'rgba(57,255,20,0.45)' }}>Jenil&apos;s Career Agent · Powered by Mistral</p>
               </div>
               <div className="ml-auto flex items-center gap-1.5">
                 <span className="w-2 h-2 rounded-full animate-pulse" style={{ background: neon }} />
@@ -200,7 +200,7 @@ export function Chatbot() {
                   value={input}
                   onChange={e => setInput(e.target.value)}
                   onKeyDown={e => e.key === 'Enter' && !e.shiftKey && send()}
-                  placeholder="Ask me about Jenil..."
+                  placeholder="Ask Seshat about Jenil..."
                   className="flex-1 bg-transparent text-sm text-zinc-200 placeholder-zinc-600 outline-none"
                 />
                 <button
