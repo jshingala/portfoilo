@@ -361,16 +361,16 @@ export default function Home() {
             viewport={{ once: true }}
             transition={{ duration: 0.5, ease: EXPO, delay: 0.1 }}
           >
-            I build AI that ships — not just AI that demos. From writing custom GPU code that cuts
+            I build AI that ships, not just AI that demos. From writing custom GPU code that cuts
             memory usage by 250×, to deploying AI assistants used by real engineers every day, I
             focus on results you can measure.{" "}
             <span className="text-zinc-300 font-medium">
               I have worked with Python, PyTorch, CUDA, Azure, and AWS
             </span>{" "}
             to take ideas from a whiteboard to production systems. I also go deep on the hardware
-            side — C++ firmware, embedded Linux, and Raspberry Pi. Whether it&apos;s a large
+            side: C++ firmware, embedded Linux, and Raspberry Pi. Whether it&apos;s a large
             language model, a computer vision pipeline, or a low-level GPU kernel, I build it
-            end-to-end. Graduating{" "}
+            end-to-end. Graduated{" "}
             <span className="text-zinc-300 font-medium">Fall 2025</span>{" "}
             and actively looking for full-time roles in AI and GPU engineering.
           </motion.p>
