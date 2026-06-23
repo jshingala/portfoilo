@@ -116,7 +116,7 @@ export function Chatbot() {
               </div>
               <div>
                 <p className="text-sm font-bold tracking-wider uppercase" style={{ color: neon }}>Seshat</p>
-                <p className="text-[10px] font-mono" style={{ color: 'rgba(57,255,20,0.45)' }}>Jenil&apos;s Career Agent · Powered by Gemini</p>
+                <p className="text-[10px] font-mono" style={{ color: 'rgba(57,255,20,0.45)' }}>Jenil&apos;s Career Agent · Powered by Mistral</p>
               </div>
               <div className="ml-auto flex items-center gap-1.5">
                 <span className="w-2 h-2 rounded-full animate-pulse" style={{ background: neon }} />
