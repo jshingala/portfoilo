@@ -191,10 +191,12 @@ export default function Projects() {
 
                 {/* Mobile: single full-width column */}
                 <div className="md:hidden pl-10 flex flex-col gap-2">
-                  <motion.div className="rounded-xl p-5 border" whileHover={{ y: -5, boxShadow: "0 0 48px rgba(57,255,20,0.18), 0 20px 40px rgba(0,0,0,0.5)" }} transition={{ type: "spring", stiffness: 340, damping: 22 }}
-                    style={{ background: "rgba(0,20,0,0.6)", borderColor: "rgba(57,255,20,0.25)", boxShadow: "0 0 20px rgba(57,255,20,0.05)" }}>
-                    <CardContent project={project} align="left" />
-                  </motion.div>
+                  <CardLink github={project.github}>
+                    <motion.div className="rounded-xl p-5 border" whileHover={{ y: -5, boxShadow: "0 0 48px rgba(57,255,20,0.18), 0 20px 40px rgba(0,0,0,0.5)" }} transition={{ type: "spring", stiffness: 340, damping: 22 }}
+                      style={{ background: "rgba(0,20,0,0.6)", borderColor: "rgba(57,255,20,0.25)", boxShadow: "0 0 20px rgba(57,255,20,0.05)" }}>
+                      <CardContent project={project} align="left" />
+                    </motion.div>
+                  </CardLink>
                   <GitHubBar project={project} />
                 </div>
 
@@ -203,10 +205,12 @@ export default function Projects() {
                   <div className="w-1/2 pr-12 flex justify-end">
                     {isLeft && (
                       <div className="w-full max-w-md flex flex-col gap-2">
-                        <motion.div className="rounded-xl p-5 border" whileHover={{ y: -5, boxShadow: "0 0 48px rgba(57,255,20,0.18), 0 20px 40px rgba(0,0,0,0.5)" }} transition={{ type: "spring", stiffness: 340, damping: 22 }}
-                          style={{ background: "rgba(0,20,0,0.6)", borderColor: "rgba(57,255,20,0.25)", boxShadow: "0 0 20px rgba(57,255,20,0.05)" }}>
-                          <CardContent project={project} align="right" />
-                        </motion.div>
+                        <CardLink github={project.github}>
+                          <motion.div className="rounded-xl p-5 border" whileHover={{ y: -5, boxShadow: "0 0 48px rgba(57,255,20,0.18), 0 20px 40px rgba(0,0,0,0.5)" }} transition={{ type: "spring", stiffness: 340, damping: 22 }}
+                            style={{ background: "rgba(0,20,0,0.6)", borderColor: "rgba(57,255,20,0.25)", boxShadow: "0 0 20px rgba(57,255,20,0.05)" }}>
+                            <CardContent project={project} align="right" />
+                          </motion.div>
+                        </CardLink>
                         <GitHubBar project={project} />
                       </div>
                     )}
@@ -214,10 +218,12 @@ export default function Projects() {
                   <div className="w-1/2 pl-12 flex justify-start">
                     {!isLeft && (
                       <div className="w-full max-w-md flex flex-col gap-2">
-                        <motion.div className="rounded-xl p-5 border" whileHover={{ y: -5, boxShadow: "0 0 48px rgba(57,255,20,0.18), 0 20px 40px rgba(0,0,0,0.5)" }} transition={{ type: "spring", stiffness: 340, damping: 22 }}
-                          style={{ background: "rgba(0,20,0,0.6)", borderColor: "rgba(57,255,20,0.25)", boxShadow: "0 0 20px rgba(57,255,20,0.05)" }}>
-                          <CardContent project={project} align="left" />
-                        </motion.div>
+                        <CardLink github={project.github}>
+                          <motion.div className="rounded-xl p-5 border" whileHover={{ y: -5, boxShadow: "0 0 48px rgba(57,255,20,0.18), 0 20px 40px rgba(0,0,0,0.5)" }} transition={{ type: "spring", stiffness: 340, damping: 22 }}
+                            style={{ background: "rgba(0,20,0,0.6)", borderColor: "rgba(57,255,20,0.25)", boxShadow: "0 0 20px rgba(57,255,20,0.05)" }}>
+                            <CardContent project={project} align="left" />
+                          </motion.div>
+                        </CardLink>
                         <GitHubBar project={project} />
                       </div>
                     )}
@@ -229,6 +235,15 @@ export default function Projects() {
         </div>
       </div>
     </div>
+  )
+}
+
+function CardLink({ github, children }: { github: string | null; children: React.ReactNode }) {
+  if (!github) return <>{children}</>
+  return (
+    <a href={github} target="_blank" rel="noopener noreferrer" className="block cursor-pointer">
+      {children}
+    </a>
   )
 }
 
