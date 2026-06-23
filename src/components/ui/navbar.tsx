@@ -13,8 +13,7 @@ const links = [
   { label: "Contact",    href: "/contact" },
 ]
 
-const neon    = "rgb(57,255,20)"
-const neonDim = "rgba(57,255,20,0.45)"
+const neon = "rgb(57,255,20)"
 const EXPO    = [0.16, 1, 0.3, 1] as const
 
 function isActive(href: string, pathname: string) {
@@ -68,6 +67,22 @@ export function Navbar() {
               </a>
             )
           })}
+          <a
+            href="/resume.pdf"
+            download="JenilShingala_GeneralResume.pdf"
+            className="text-sm font-semibold px-4 py-1.5 rounded-full transition-all duration-200"
+            style={{ border: `1px solid ${neon}`, color: neon }}
+            onMouseOver={e => {
+              e.currentTarget.style.background = neon
+              e.currentTarget.style.color = "#080808"
+            }}
+            onMouseOut={e => {
+              e.currentTarget.style.background = "transparent"
+              e.currentTarget.style.color = neon
+            }}
+          >
+            General Resume
+          </a>
         </nav>
 
         {/* Mobile hamburger */}

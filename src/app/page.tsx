@@ -265,6 +265,17 @@ export default function Home() {
             >
               View Projects
             </motion.a>
+            <motion.a
+              href="/resume.pdf"
+              download="JenilShingala_GeneralResume.pdf"
+              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full text-sm font-semibold transition-colors duration-200"
+              style={{ border: "1px solid rgb(57,255,20)", color: "rgb(57,255,20)" }}
+              whileHover={{ scale: 1.025, background: "rgb(57,255,20)", color: "#080808" }}
+              whileTap={{ scale: 0.97 }}
+              transition={{ type: "spring", stiffness: 400, damping: 22 }}
+            >
+              General Resume
+            </motion.a>
           </motion.div>
 
           {/* NVIDIA badges */}

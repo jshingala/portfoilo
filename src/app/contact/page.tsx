@@ -1,12 +1,22 @@
 'use client'
 
 import { motion } from "framer-motion"
-import { MapPin, ArrowUpRight } from "lucide-react"
+import { MapPin, ArrowUpRight, FileText } from "lucide-react"
 import Image from "next/image"
 
 const EXPO = [0.16, 1, 0.3, 1] as const
 
-const contacts = [
+type Contact = {
+  logo?: string
+  icon?: React.ElementType
+  label: string
+  value: string
+  href: string
+  download?: string
+  primary: boolean
+}
+
+const contacts: Contact[] = [
   {
     logo: "/icon-calendly.png",
     label: "Schedule a Call",
@@ -40,6 +50,14 @@ const contacts = [
     label: "GitHub",
     value: "github.com/jshingala",
     href: "https://github.com/jshingala",
+    primary: false,
+  },
+  {
+    icon: FileText,
+    label: "General Resume",
+    value: "Download PDF",
+    href: "/resume.pdf",
+    download: "JenilShingala_GeneralResume.pdf",
     primary: false,
   },
 ]
@@ -94,11 +112,13 @@ export default function Contact() {
           variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.07 } } }}
         >
           {contacts.map((c) => {
+            const Icon = c.icon
             return (
               <motion.a
                 key={c.label}
                 href={c.href}
-                target={c.href.startsWith("mailto:") || c.href.startsWith("tel:") ? undefined : "_blank"}
+                download={c.download}
+                target={c.href.startsWith("mailto:") || c.href.startsWith("tel:") || c.download ? undefined : "_blank"}
                 rel="noopener noreferrer"
                 variants={{
                   hidden: { opacity: 0, y: 16 },
@@ -136,7 +156,10 @@ export default function Contact() {
                         ? { background: "rgba(0,0,0,0.15)" }
                         : { background: "rgba(255,255,255,0.06)", border: "1px solid rgba(57,255,20,0.15)" }
                     }>
-                    <Image src={c.logo} alt={c.label} width={40} height={40} className="w-full h-full object-contain p-1.5" />
+                    {c.logo
+                      ? <Image src={c.logo} alt={c.label} width={40} height={40} className="w-full h-full object-contain p-1.5" />
+                      : Icon && <Icon size={18} style={{ color: c.primary ? "#0a0a0a" : "rgb(57,255,20)" }} />
+                    }
                   </div>
                   <div>
                     <p className="text-xs font-mono tracking-widest uppercase mb-0.5"
