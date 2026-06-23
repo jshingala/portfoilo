@@ -57,30 +57,29 @@ export async function POST(req: NextRequest) {
   try {
     const { messages } = await req.json()
 
-    const apiKey = process.env.HUGGINGFACE_API_KEY
+    const apiKey = process.env.GEMINI_API_KEY
     if (!apiKey) {
       return NextResponse.json(
-        { error: 'Hugging Face API key not configured. Add HUGGINGFACE_API_KEY to .env.local' },
+        { error: 'Gemini API key not configured.' },
         { status: 500 }
       )
     }
 
+    // Convert OpenAI-style messages → Gemini format (role: 'model' not 'assistant')
+    const geminiContents = (messages as { role: string; content: string }[]).map(m => ({
+      role: m.role === 'assistant' ? 'model' : 'user',
+      parts: [{ text: m.content }],
+    }))
+
     const response = await fetch(
-      'https://api-inference.huggingface.co/v1/chat/completions',
+      `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`,
       {
         method: 'POST',
-        headers: {
-          Authorization: `Bearer ${apiKey}`,
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          model: 'mistralai/Mistral-7B-Instruct-v0.2',
-          messages: [
-            { role: 'system', content: SYSTEM_PROMPT },
-            ...messages,
-          ],
-          max_tokens: 200,
-          temperature: 0.7,
+          systemInstruction: { parts: [{ text: SYSTEM_PROMPT }] },
+          contents: geminiContents,
+          generationConfig: { maxOutputTokens: 300, temperature: 0.7 },
         }),
       }
     )
@@ -92,7 +91,7 @@ export async function POST(req: NextRequest) {
 
     const data = await response.json()
     const reply =
-      data.choices?.[0]?.message?.content?.trim() ??
+      data.candidates?.[0]?.content?.parts?.[0]?.text?.trim() ??
       "Sorry, I couldn't generate a response right now."
 
     return NextResponse.json({ reply })
