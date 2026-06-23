@@ -1,41 +1,42 @@
 'use client'
 
 import { motion } from "framer-motion"
-import { Mail, Phone, MapPin, Calendar, ArrowUpRight, GitFork, Globe } from "lucide-react"
+import { MapPin, ArrowUpRight } from "lucide-react"
+import Image from "next/image"
 
 const EXPO = [0.16, 1, 0.3, 1] as const
 
 const contacts = [
   {
-    icon: Calendar,
+    logo: "/icon-calendly.png",
     label: "Schedule a Call",
     value: "30-min intro · Calendly",
     href: "https://calendly.com/jenilshingala2002/30min",
     primary: true,
   },
   {
-    icon: Mail,
+    logo: "/icon-email.jpg",
     label: "Email",
     value: "jenilshingala2002@gmail.com",
     href: "mailto:jenilshingala2002@gmail.com",
     primary: false,
   },
   {
-    icon: Phone,
+    logo: "/icon-phone.jpg",
     label: "Phone",
     value: "+1 (916) 908-7006",
     href: "tel:+19169087006",
     primary: false,
   },
   {
-    icon: Globe,
+    logo: "/icon-linkedin.png",
     label: "LinkedIn",
     value: "jenil-shingala-39685a219",
     href: "https://www.linkedin.com/in/jenil-shingala-39685a219/",
     primary: false,
   },
   {
-    icon: GitFork,
+    logo: "/icon-github.png",
     label: "GitHub",
     value: "github.com/jshingala",
     href: "https://github.com/jshingala",
@@ -93,7 +94,6 @@ export default function Contact() {
           variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.07 } } }}
         >
           {contacts.map((c) => {
-            const Icon = c.icon
             return (
               <motion.a
                 key={c.label}
@@ -109,14 +109,8 @@ export default function Contact() {
                 className="group flex items-center justify-between px-5 py-4 rounded-2xl transition-all duration-200"
                 style={
                   c.primary
-                    ? {
-                        background: "rgb(57,255,20)",
-                        boxShadow: "0 0 32px rgba(57,255,20,0.25)",
-                      }
-                    : {
-                        background: "rgba(255,255,255,0.03)",
-                        border: "1px solid rgba(57,255,20,0.15)",
-                      }
+                    ? { background: "rgb(57,255,20)", boxShadow: "0 0 32px rgba(57,255,20,0.25)" }
+                    : { background: "rgba(255,255,255,0.03)", border: "1px solid rgba(57,255,20,0.15)" }
                 }
                 onMouseOver={e => {
                   if (!c.primary) {
@@ -136,13 +130,13 @@ export default function Contact() {
                 }}
               >
                 <div className="flex items-center gap-4">
-                  <div className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0"
+                  <div className="w-10 h-10 rounded-xl overflow-hidden shrink-0 flex items-center justify-center"
                     style={
                       c.primary
                         ? { background: "rgba(0,0,0,0.15)" }
-                        : { background: "rgba(57,255,20,0.08)", border: "1px solid rgba(57,255,20,0.2)" }
+                        : { background: "rgba(255,255,255,0.06)", border: "1px solid rgba(57,255,20,0.15)" }
                     }>
-                    <Icon size={16} style={{ color: c.primary ? "#0a0a0a" : "rgb(57,255,20)" }} />
+                    <Image src={c.logo} alt={c.label} width={40} height={40} className="w-full h-full object-contain p-1.5" />
                   </div>
                   <div>
                     <p className="text-xs font-mono tracking-widest uppercase mb-0.5"
