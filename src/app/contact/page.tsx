@@ -1,70 +1,183 @@
 'use client'
 
 import { motion } from "framer-motion"
-import { Mail, Globe, MapPin } from "lucide-react"
+import { Mail, Phone, MapPin, Calendar, ArrowUpRight, GitFork, Globe } from "lucide-react"
+
+const EXPO = [0.16, 1, 0.3, 1] as const
+
+const contacts = [
+  {
+    icon: Calendar,
+    label: "Schedule a Call",
+    value: "30-min intro · Calendly",
+    href: "https://calendly.com/jenilshingala2002/30min",
+    primary: true,
+  },
+  {
+    icon: Mail,
+    label: "Email",
+    value: "jenilshingala2002@gmail.com",
+    href: "mailto:jenilshingala2002@gmail.com",
+    primary: false,
+  },
+  {
+    icon: Phone,
+    label: "Phone",
+    value: "+1 (916) 908-7006",
+    href: "tel:+19169087006",
+    primary: false,
+  },
+  {
+    icon: Globe,
+    label: "LinkedIn",
+    value: "jenil-shingala-39685a219",
+    href: "https://www.linkedin.com/in/jenil-shingala-39685a219/",
+    primary: false,
+  },
+  {
+    icon: GitFork,
+    label: "GitHub",
+    value: "github.com/jshingala",
+    href: "https://github.com/jshingala",
+    primary: false,
+  },
+]
 
 export default function Contact() {
   return (
-    <div className="min-h-screen flex items-center justify-center px-5 sm:px-10 md:px-20 lg:px-28 pt-16">
-      <motion.div
-        initial={{ opacity: 0, y: 24 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="max-w-xl w-full text-center"
-      >
-        <h1 className="text-5xl md:text-6xl font-bold tracking-widest uppercase mb-4"
-          style={{ color: "rgb(57,255,20)" }}>
-          Contact Me
-        </h1>
+    <div className="min-h-screen flex items-center justify-center px-5 sm:px-10 md:px-20 lg:px-28 pt-20 pb-16">
+      <div className="w-full max-w-2xl">
 
-        <p className="text-zinc-500 text-sm leading-relaxed mb-12 tracking-wide">
-          Open to full-time roles in AI engineering, GPU computing, and ML infrastructure.<br />
-          Feel free to reach out anytime.
-        </p>
+        {/* Heading */}
+        <motion.div
+          initial={{ opacity: 0, y: 24, filter: "blur(10px)" }}
+          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          transition={{ duration: 0.55, ease: EXPO }}
+          className="mb-3"
+        >
+          <span className="font-mono text-[11px] tracking-[0.4em] uppercase"
+            style={{ color: "rgba(57,255,20,0.55)" }}>
+            Available Now
+          </span>
+        </motion.div>
 
-        <div className="flex flex-col gap-4 items-center">
-          <a
-            href="mailto:jenilshingala2002@gmail.com"
-            className="inline-flex items-center gap-3 px-5 sm:px-8 py-3 sm:py-4 rounded-full text-sm sm:text-base font-semibold tracking-wider transition-all duration-200 w-fit max-w-full"
-            style={{ background: "rgb(57,255,20)", color: "#0a0a0a" }}
-            onMouseOver={e => {
-              e.currentTarget.style.background = "rgb(40,200,10)"
-              e.currentTarget.style.boxShadow = "0 0 20px rgba(57,255,20,0.4)"
-            }}
-            onMouseOut={e => {
-              e.currentTarget.style.background = "rgb(57,255,20)"
-              e.currentTarget.style.boxShadow = "none"
-            }}
-          >
-            <Mail size={16} />
-            jenilshingala2002@gmail.com
-          </a>
+        <motion.h1
+          initial={{ opacity: 0, y: 24, filter: "blur(10px)" }}
+          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+          transition={{ duration: 0.55, ease: EXPO, delay: 0.04 }}
+          className="font-bold leading-[0.95] tracking-[-0.03em] mb-5"
+          style={{ fontSize: "clamp(3rem, 8vw, 6rem)", color: "rgb(248,248,248)" }}
+        >
+          Let&apos;s{" "}
+          <span style={{ color: "rgb(57,255,20)", textShadow: "0 0 80px rgba(57,255,20,0.2)" }}>
+            Talk.
+          </span>
+        </motion.h1>
 
-          <a
-            href="https://www.linkedin.com/in/jenil-shingala-39685a219/"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-3 px-8 py-4 rounded-full text-base font-semibold tracking-wider transition-all duration-200 w-fit text-zinc-300 hover:text-zinc-100"
-            style={{ border: "1px solid rgba(57,255,20,0.4)" }}
-            onMouseOver={e => {
-              e.currentTarget.style.borderColor = "rgba(57,255,20,0.8)"
-              e.currentTarget.style.boxShadow = "0 0 20px rgba(57,255,20,0.1)"
-            }}
-            onMouseOut={e => {
-              e.currentTarget.style.borderColor = "rgba(57,255,20,0.4)"
-              e.currentTarget.style.boxShadow = "none"
-            }}
-          >
-            <Globe size={16} />
-            LinkedIn
-          </a>
+        <motion.p
+          initial={{ opacity: 0, y: 12 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4, ease: EXPO, delay: 0.1 }}
+          className="text-zinc-500 leading-relaxed mb-12 max-w-md"
+          style={{ fontSize: "clamp(0.95rem, 1.3vw, 1.05rem)" }}
+        >
+          Open to full-time roles in AI engineering, GPU computing, and ML infrastructure.
+          Book a quick call or reach out directly.
+        </motion.p>
 
-          <div className="flex items-center gap-2 text-zinc-600 text-sm mt-4">
-            <MapPin size={13} />
-            <span>Sacramento, CA</span>
-          </div>
-        </div>
-      </motion.div>
+        {/* Contact cards */}
+        <motion.div
+          className="flex flex-col gap-3"
+          initial="hidden"
+          animate="visible"
+          variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.07 } } }}
+        >
+          {contacts.map((c) => {
+            const Icon = c.icon
+            return (
+              <motion.a
+                key={c.label}
+                href={c.href}
+                target={c.href.startsWith("mailto:") || c.href.startsWith("tel:") ? undefined : "_blank"}
+                rel="noopener noreferrer"
+                variants={{
+                  hidden: { opacity: 0, y: 16 },
+                  visible: { opacity: 1, y: 0, transition: { duration: 0.4, ease: EXPO } },
+                }}
+                whileHover={{ x: 6 }}
+                transition={{ type: "spring", stiffness: 400, damping: 28 }}
+                className="group flex items-center justify-between px-5 py-4 rounded-2xl transition-all duration-200"
+                style={
+                  c.primary
+                    ? {
+                        background: "rgb(57,255,20)",
+                        boxShadow: "0 0 32px rgba(57,255,20,0.25)",
+                      }
+                    : {
+                        background: "rgba(255,255,255,0.03)",
+                        border: "1px solid rgba(57,255,20,0.15)",
+                      }
+                }
+                onMouseOver={e => {
+                  if (!c.primary) {
+                    e.currentTarget.style.background = "rgba(57,255,20,0.06)"
+                    e.currentTarget.style.borderColor = "rgba(57,255,20,0.4)"
+                  } else {
+                    e.currentTarget.style.boxShadow = "0 0 48px rgba(57,255,20,0.45)"
+                  }
+                }}
+                onMouseOut={e => {
+                  if (!c.primary) {
+                    e.currentTarget.style.background = "rgba(255,255,255,0.03)"
+                    e.currentTarget.style.borderColor = "rgba(57,255,20,0.15)"
+                  } else {
+                    e.currentTarget.style.boxShadow = "0 0 32px rgba(57,255,20,0.25)"
+                  }
+                }}
+              >
+                <div className="flex items-center gap-4">
+                  <div className="w-9 h-9 rounded-xl flex items-center justify-center shrink-0"
+                    style={
+                      c.primary
+                        ? { background: "rgba(0,0,0,0.15)" }
+                        : { background: "rgba(57,255,20,0.08)", border: "1px solid rgba(57,255,20,0.2)" }
+                    }>
+                    <Icon size={16} style={{ color: c.primary ? "#0a0a0a" : "rgb(57,255,20)" }} />
+                  </div>
+                  <div>
+                    <p className="text-xs font-mono tracking-widest uppercase mb-0.5"
+                      style={{ color: c.primary ? "rgba(0,0,0,0.55)" : "rgba(57,255,20,0.45)" }}>
+                      {c.label}
+                    </p>
+                    <p className="text-sm font-semibold"
+                      style={{ color: c.primary ? "#0a0a0a" : "rgb(220,220,220)" }}>
+                      {c.value}
+                    </p>
+                  </div>
+                </div>
+                <ArrowUpRight
+                  size={18}
+                  style={{ color: c.primary ? "rgba(0,0,0,0.4)" : "rgba(57,255,20,0.35)" }}
+                  className="shrink-0 transition-transform duration-200 group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+                />
+              </motion.a>
+            )
+          })}
+        </motion.div>
+
+        {/* Location footer */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.6, duration: 0.4 }}
+          className="flex items-center gap-2 mt-10"
+          style={{ color: "rgba(255,255,255,0.18)" }}
+        >
+          <MapPin size={12} />
+          <span className="font-mono text-[11px] tracking-widest uppercase">Sacramento, CA · Open to remote & relocation</span>
+        </motion.div>
+
+      </div>
     </div>
   )
 }
