@@ -1,7 +1,8 @@
 'use client'
 
 import { motion } from "framer-motion"
-import { MapPin } from "lucide-react"
+import { MapPin, ExternalLink } from "lucide-react"
+import Image from "next/image"
 
 function Bold({ children }: { children: string }) {
   const parts = children.split(/(\*\*[^*]+\*\*)/)
@@ -22,6 +23,8 @@ const experience = [
     role: "AI Software Engineer Intern (Project Lead)",
     period: "May 2025 – Dec 2025",
     location: "Sacramento, CA",
+    logo: "/logo-aic.png",
+    website: "https://wateraic.com/",
     bullets: [
       "Deployed a production **agentic RAG** system on **Microsoft Teams** for a water/wastewater SCADA firm; built a document ingestion + **Azure AI Search** vector pipeline used by engineers daily, raising productivity by **87%**.",
       "Built **API-connected automations** (Bill of Materials, PCN, Monday tools) across **5+ data sources**, including an **MCP integration** to Monday.com and **Power Automate** flows.",
@@ -35,6 +38,8 @@ const experience = [
     role: "Software Engineer",
     period: "Sep 2024 – May 2025",
     location: "Sacramento, CA",
+    logo: "/logo-sentry.png",
+    website: "https://sentry-sight.com/",
     bullets: [
       "Deployed a **full-stack AI app** with a React frontend + **AWS backend (RDS, LightSail)**, serving real-time **computer vision** inference at **<50ms latency**.",
       "Built a two-model **deep-learning pipeline** (**YOLOv8** + transfer-learned **CNN**), achieving **91% CNN accuracy** and **94% face-recognition accuracy** across a 500+ person database.",
@@ -49,6 +54,8 @@ const experience = [
     role: "Embedded Engineer Intern",
     period: "Aug 2021 – Dec 2021",
     location: "Mumbai, India",
+    logo: "/logo-goldfield.jpg",
+    website: "https://www.goldfieldws.in/",
     bullets: [
       "Wrote **C++ firmware** for industrial weighing systems; built automated test routines verifying hardware readings against known references.",
       "Applied **OOP design patterns** across the firmware stack for reusability; integrated firmware with physical scale hardware in a team of 4 engineers.",
@@ -98,28 +105,34 @@ export default function Experience() {
 
                 {/* Mobile: single full-width column */}
                 <div className="md:hidden pl-10">
-                  <motion.div className="rounded-xl p-5 border" whileHover={{ y: -5, boxShadow: "0 0 48px rgba(57,255,20,0.18), 0 20px 40px rgba(0,0,0,0.5)" }} transition={{ type: "spring", stiffness: 340, damping: 22 }}
-                    style={{ background: "rgba(0,20,0,0.6)", borderColor: "rgba(57,255,20,0.25)", boxShadow: "0 0 20px rgba(57,255,20,0.05)" }}>
-                    <ExperienceCard job={job} align="left" />
-                  </motion.div>
+                  <a href={job.website} target="_blank" rel="noopener noreferrer" className="block">
+                    <motion.div className="rounded-xl p-5 border cursor-pointer" whileHover={{ y: -5, boxShadow: "0 0 48px rgba(57,255,20,0.18), 0 20px 40px rgba(0,0,0,0.5)" }} transition={{ type: "spring", stiffness: 340, damping: 22 }}
+                      style={{ background: "rgba(0,20,0,0.6)", borderColor: "rgba(57,255,20,0.25)", boxShadow: "0 0 20px rgba(57,255,20,0.05)" }}>
+                      <ExperienceCard job={job} align="left" />
+                    </motion.div>
+                  </a>
                 </div>
 
                 {/* Desktop: alternating two-column */}
                 <div className="hidden md:flex items-start">
                   <div className="w-1/2 pr-12 flex justify-end">
                     {isLeft && (
-                      <motion.div className="w-full max-w-md rounded-xl p-6 border" whileHover={{ y: -5, boxShadow: "0 0 48px rgba(57,255,20,0.18), 0 20px 40px rgba(0,0,0,0.5)" }} transition={{ type: "spring", stiffness: 340, damping: 22 }}
-                        style={{ background: "rgba(0,20,0,0.6)", borderColor: "rgba(57,255,20,0.25)", boxShadow: "0 0 20px rgba(57,255,20,0.05)" }}>
-                        <ExperienceCard job={job} align="right" />
-                      </motion.div>
+                      <a href={job.website} target="_blank" rel="noopener noreferrer" className="block w-full max-w-md">
+                        <motion.div className="w-full rounded-xl p-6 border cursor-pointer" whileHover={{ y: -5, boxShadow: "0 0 48px rgba(57,255,20,0.18), 0 20px 40px rgba(0,0,0,0.5)" }} transition={{ type: "spring", stiffness: 340, damping: 22 }}
+                          style={{ background: "rgba(0,20,0,0.6)", borderColor: "rgba(57,255,20,0.25)", boxShadow: "0 0 20px rgba(57,255,20,0.05)" }}>
+                          <ExperienceCard job={job} align="right" />
+                        </motion.div>
+                      </a>
                     )}
                   </div>
                   <div className="w-1/2 pl-12 flex justify-start">
                     {!isLeft && (
-                      <motion.div className="w-full max-w-md rounded-xl p-6 border" whileHover={{ y: -5, boxShadow: "0 0 48px rgba(57,255,20,0.18), 0 20px 40px rgba(0,0,0,0.5)" }} transition={{ type: "spring", stiffness: 340, damping: 22 }}
-                        style={{ background: "rgba(0,20,0,0.6)", borderColor: "rgba(57,255,20,0.25)", boxShadow: "0 0 20px rgba(57,255,20,0.05)" }}>
-                        <ExperienceCard job={job} align="left" />
-                      </motion.div>
+                      <a href={job.website} target="_blank" rel="noopener noreferrer" className="block w-full max-w-md">
+                        <motion.div className="w-full rounded-xl p-6 border cursor-pointer" whileHover={{ y: -5, boxShadow: "0 0 48px rgba(57,255,20,0.18), 0 20px 40px rgba(0,0,0,0.5)" }} transition={{ type: "spring", stiffness: 340, damping: 22 }}
+                          style={{ background: "rgba(0,20,0,0.6)", borderColor: "rgba(57,255,20,0.25)", boxShadow: "0 0 20px rgba(57,255,20,0.05)" }}>
+                          <ExperienceCard job={job} align="left" />
+                        </motion.div>
+                      </a>
                     )}
                   </div>
                 </div>
@@ -136,10 +149,20 @@ function ExperienceCard({ job, align }: { job: typeof experience[0]; align: "lef
   const right = align === "right"
   return (
     <>
-      <h2 className={`font-bold text-lg sm:text-xl tracking-wide mb-1 ${right ? "text-right" : ""}`}
-        style={{ color: "rgb(57,255,20)" }}>
-        {job.company}
-      </h2>
+      {/* Logo + company name row */}
+      <div className={`flex items-center gap-3 mb-3 ${right ? "flex-row-reverse" : ""}`}>
+        <div className="w-10 h-10 rounded-lg overflow-hidden shrink-0 flex items-center justify-center"
+          style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(57,255,20,0.2)" }}>
+          <Image src={job.logo} alt={job.company} width={40} height={40} className="w-full h-full object-contain p-1" />
+        </div>
+        <div className={`flex-1 flex items-center gap-2 ${right ? "justify-end" : ""}`}>
+          <h2 className="font-bold text-lg sm:text-xl tracking-wide leading-tight"
+            style={{ color: "rgb(57,255,20)" }}>
+            {job.company}
+          </h2>
+          <ExternalLink size={13} style={{ color: "rgba(57,255,20,0.45)" }} className="shrink-0" />
+        </div>
+      </div>
 
       <p className={`text-zinc-300 text-sm sm:text-base font-semibold mb-1 ${right ? "text-right" : ""}`}>
         {job.role}
