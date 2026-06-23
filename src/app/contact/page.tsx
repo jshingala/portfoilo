@@ -165,7 +165,7 @@ export default function Contact() {
           animate={{ opacity: 1 }}
           transition={{ delay: 0.6, duration: 0.4 }}
           className="flex items-center gap-2 mt-10"
-          style={{ color: "rgba(255,255,255,0.18)" }}
+          style={{ color: "rgba(255,255,255,0.55)" }}
         >
           <MapPin size={12} />
           <span className="font-mono text-[11px] tracking-widest uppercase">Sacramento, CA · Open to remote & relocation</span>
