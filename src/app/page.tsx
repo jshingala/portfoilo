@@ -224,7 +224,7 @@ export default function Home() {
             className="flex flex-wrap gap-3"
           >
             <motion.a
-              href="mailto:jenilshingala2002@gmail.com"
+              href="/contact"
               className="group inline-flex items-center gap-2 px-7 py-3.5 rounded-full text-sm font-semibold"
               style={{ background: "rgb(57,255,20)", color: "#080808" }}
               whileHover={{ scale: 1.035, boxShadow: "0 0 36px rgba(57,255,20,0.45)" }}
@@ -243,6 +243,16 @@ export default function Home() {
               transition={{ type: "spring", stiffness: 400, damping: 22 }}
             >
               View Work
+            </motion.a>
+            <motion.a
+              href="/projects"
+              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full text-sm font-medium text-zinc-400 hover:text-zinc-100 transition-colors duration-200"
+              style={{ border: "1px solid rgba(255,255,255,0.1)" }}
+              whileHover={{ scale: 1.025, borderColor: "rgba(57,255,20,0.4)" }}
+              whileTap={{ scale: 0.97 }}
+              transition={{ type: "spring", stiffness: 400, damping: 22 }}
+            >
+              View Projects
             </motion.a>
           </motion.div>
 
