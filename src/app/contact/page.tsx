@@ -60,14 +60,6 @@ const contacts: Contact[] = [
     download: "JenilShingala_GeneralResume.pdf",
     primary: false,
   },
-  {
-    icon: FileText,
-    label: "Master Resume",
-    value: "Download PDF",
-    href: "/resume-master.pdf",
-    download: "JenilShingala_MasterResume.pdf",
-    primary: false,
-  },
 ]
 
 export default function Contact() {

@@ -276,17 +276,6 @@ export default function Home() {
             >
               General Resume
             </motion.a>
-            <motion.a
-              href="/resume-master.pdf"
-              download="JenilShingala_MasterResume.pdf"
-              className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full text-sm font-semibold"
-              style={{ background: "rgb(57,255,20)", color: "#080808" }}
-              whileHover={{ scale: 1.035, boxShadow: "0 0 36px rgba(57,255,20,0.45)" }}
-              whileTap={{ scale: 0.97 }}
-              transition={{ type: "spring", stiffness: 400, damping: 22 }}
-            >
-              Master Resume
-            </motion.a>
           </motion.div>
 
           {/* NVIDIA badges */}

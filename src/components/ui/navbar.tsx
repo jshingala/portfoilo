@@ -77,16 +77,6 @@ export function Navbar() {
           >
             General Resume
           </a>
-          <a
-            href="/resume-master.pdf"
-            download="JenilShingala_MasterResume.pdf"
-            className="text-sm font-semibold px-4 py-1.5 rounded-full transition-all duration-200"
-            style={{ background: neon, color: "#080808" }}
-            onMouseOver={e => { e.currentTarget.style.boxShadow = "0 0 20px rgba(57,255,20,0.5)" }}
-            onMouseOut={e => { e.currentTarget.style.boxShadow = "none" }}
-          >
-            Master Resume
-          </a>
         </nav>
 
         {/* Mobile hamburger */}
